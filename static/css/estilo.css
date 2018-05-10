@@ -8,6 +8,9 @@
 
 body{
 	background: #white;
+	background:url(../img/fondo.jpg) no-repeat fixed center center #333;
+    background-size: cover; 
+    font-family: 'Arial';
 }
 
 .navegacion{

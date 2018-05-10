@@ -1,37 +1,51 @@
 {% extends 'base/base.html'%}
-
+{% load staticfiles %}
 {%block title%}Configuracion{% endblock %}
 
 {% block content %}
 
+<link rel="stylesheet" href="{% static "css/configuracion.css" %}"/>
 <form method="POST">
 	{% csrf_token %}
 	<div class="form-group">
 		<h2>Configuracion Base</h2>
-		<label>Temperatura Maxima</label>
+		<div>
+		<p>Temperatura Maxima</p>
 		<input  class="form-control" type="number" name="temperaturaMax" id="temperaturaMax">
+		</div>
 
-	    <label>Temperatura Minima</label>
+		<div>
+	    <p>Temperatura Minima</p>
 		<input  class="form-control" type="number" name="temperaturaMin" id="temperaturaMin">
+		</div>
 
-	    <label>Humedad</label>
+		<div>
+	    <p>Humedad</p>
 		<input  class="form-control" type="number" name="humedad" id="humedad">
+		</div>
 
-	    <label>Altitud</label>
+		<div>
+	    <p>Altitud</p>
 		<input  class="form-control" type="number" name="altitud" id="altitud">
+		</div>
 
-	    <label>Luminosidad</label>
+		<div>
+	    <p>Luminosidad</p>
 		<input  class="form-control" type="number" name="luminosidad" id="luminosidad">
+		</div>
 
-	    <label>Distancia Lineal</label>
+		<div>
+	    <p>Distancia Lineal</p>
 		<input  class="form-control" type="number" name="distanciaL" id="distanciaL">
-	    
+	    </div>
+
 	</div>
-	<div class="form-group">
+</br>
+	<div class="botones">
         <button type="submit" class="btn btn-primary btn-block">Guardar</button>
         <a class="btn btn-danger btn-block" href="">Cancelar</a>
     </div>
 </form>
 	
-{% endblock %}
+{% endblock %} 
 

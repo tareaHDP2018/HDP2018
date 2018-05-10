@@ -4,18 +4,37 @@
 <head>
 	<meta charset="utf-8">
 	<title>{% block title %}Document{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static "css/estilo.css" %}">
 </head>
 <body>
-	{% block header%}
-	<h1>Este es el HEADER del archivo base</h1>
+	<div class="container">
+		
+	{% block navbar%}
+      	<header>
+      		<nav class="navegacion">
+      			<ul class="menu">
+      				<li><a href="">Inicio</a></li>
+      				<li><a href="">SimulaFri</a></li>
+      				<li><a href="">Mis simulaciones</a></li>
+      				<li><a href="">Opciones</a>
+						<ul class="submenu">
+							<li><a href="">Salir</a></li>
+						</ul>
+      				</li>
+      				
+
+      			</ul>
+      		</nav>
+      	</header>
+	
 	{% endblock %}
 
 	{% block content%}
 	<h1>Este es el contenido del archivo base</h1>
 	{% endblock %}
-
+  
 	
-
+</div>
 </body>
 <footer>
 	{% block footer %}

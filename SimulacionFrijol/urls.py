@@ -19,7 +19,9 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^simula/', include('apps.configurarSimulacion.urls',namespace="configurar")),
+    
     url(r'^',include('apps.login_registrar.urls',namespace="login")),
+    url(r'^nuevo/',include('apps.nuevo_editar.urls',namespace="nuevo")),
     #AQUI VAN A AGREGAR CADA UNO SUS URL GLOBLAES, Y CADA QUIEN TRABAJARA EN SU APPS ASIGNADA,
     # NO TOQUEN LAS URLS YA DEFINIDAS SIN PREVIO AVISO EN EL GRUPO
 ]

@@ -22,15 +22,4 @@ def configuracion(request):
 	   configurar.save()
 	   return redirect('configurar:nuevo')
 	return render(request,'Simulacion/configuracion.html')
-
-	   #form = configurarForms(request.POST)
-
-"""def configuracion(request):
-	if request.method == 'POST':
-		form = ConfiguraForms(request.POST)
-		if form.is_valid():
-			form.save()
-		return redirect('configurar:nuevo')
-	else:
-		form = ConfiguraForms()
-	return render(request,'Simulacion/configuracion.html',{'formulario':form})"""
+ 

@@ -1,8 +1,38 @@
 {% extends 'base/base.html'%}
-
+{% load staticfiles %}
 {% block title%}Nuevo {% endblock %}
 
 {% block content %}
-<h1>Inicio del sistems nuevo</h1>
+<link rel="stylesheet" href="{% static "css/nuevo.css" %}"/>
+<form class="formulario" method="POST">
+	 {% csrf_token %}
+   
+	<div class="container">
+		<div class="form-group">
+			<p>Nombre Simulacion:</p>
+			<input type="text" name="simulacion" value="" class="form-control"/>
+		</div>
+		<div class="form-group">
+			<p>Lineas de siembra</p>
+			<input type="text" name="linea" value="" class="form-control"/>
+		</div>
+		<div class="form-group">
+			<p>Siembra</p>
+			<h2>{{siembras.nombre}}</h2>
+		</div>
+		<div class="form-group">
+			<p>Fases de cultivo</p>
+			{% if fase %}
+			{% for fase in fases %}
+			<p>{{fases.id}}</p>
+			<input type="checkbox" value="{{fases.id}}" name="fase" id="fase" />
+			{% endfor %}
+			{% else %}
+			<h1>No hay etapas que simular</h1>
+			{% endif %}
+		</div>
+	</div>
+	
+</form>
 
 {% endblock %}

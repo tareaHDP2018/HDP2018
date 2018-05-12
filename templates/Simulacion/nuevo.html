@@ -7,24 +7,26 @@
 <form class="formulario" method="POST">
 	 {% csrf_token %}
    
-	<div class="container">
+	<div class="form-group ">
 		<div class="form-group">
 			<p>Nombre Simulacion:</p>
 			<input type="text" name="simulacion" value="" class="form-control"/>
 		</div>
-		<div class="form-group">
-			<p>Lineas de siembra</p>
-			<input type="text" name="linea" value="" class="form-control"/>
+		<div class="col-xs-2">
+			<label for="ex1">Lineas de siembra</label>
+			<input type="number" name="linea" id="ex1" class="form-control"/>
 		</div>
+		</br>
 		<div class="form-group">
-			<p>Siembra</p>
+			<label>Siembra</label>
 			<h2>{{siembras.nombre}}</h2>
 		</div>
 		<div class="form-group">
-			<p>Fases de cultivo</p>
+			<label>Fases de cultivo</label>
+		</br>
 			{% if fase %}
-			{% for fase in fases %}
-			<p>{{fases.id}}</p>
+			{% for fases in fase %}
+			<label class="checkbox">{{fases.descripcion}}</label>
 			
 			<input type="checkbox" value="{{fases.id}}" name="fase" id="fase" />
 			{% endfor %}
@@ -32,6 +34,46 @@
 			<h1>No hay etapas que simular</h1>
 			{% endif %}
 		</div>
+	</div>
+	<div class="container">
+		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Configuracion</button>
+	  <div class="modal fade" id="myModal" role="dialog">
+    	<div class="modal-dialog">
+    	 <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Configuracion Base</h4>
+           </div>
+           <div class="modal-body">
+              <label>Temperatura Maxima</label>
+              <input type="number" name="temperaturaMax" id="temperaturaMax" value="25" placeholder="Centigrados" class="form-control"/>
+              <label>Temperatura Minima</label>
+              <input type="number" name="temperaturaMin" id="temperaturaMin" value="10" placeholder="Centigrados" class="form-control"/>
+              <div class="form-group">
+              <label>Humedad</label>
+              <input type="number" name="humedad" id="humedad" value="" placeholder="milimetros lluvia" class="form-control"/>
+              </div>
+              <div class="form-group">
+              <label>Altitud</label>
+              <input type="number" name="altitud" id="altitud" value="" placeholder="msnm" class="form-control"/>
+              </div>
+              <div class="form-group">
+              <label>Luminosidad</label>
+              <input type="number" name="luminosidad" id="luminosidad" value="" placeholder="" class="form-control"/>
+              </div>
+              <div class="form-group">
+              <label>Distancia entre Linea</label>
+              <input type="number" name="distanciaL" id="distanciaL" value="" placeholder="centimetros" class="form-control"/>
+              </div>
+           </div>
+           <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="reset" class="btn btn-info">
+           </div>
+         </div>
+
+    	</div>
+      </div>
 	</div>
 	
 </form>

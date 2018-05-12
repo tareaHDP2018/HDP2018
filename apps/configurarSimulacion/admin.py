@@ -6,4 +6,6 @@ admin.site.register(Siembra)
 admin.site.register(Configuracion)
 admin.site.register(FaseCultivo)
 admin.site.register(Simulacion)
-admin.site.register(Usuario)
+@admin.register(Usuario)
+class AdminUsuarios(admin.ModelAdmin):
+	list_display=('nombre','apellido','password','fechaNacimiento','sexo')

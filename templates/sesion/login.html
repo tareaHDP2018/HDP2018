@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Login</title>
-</head>
-<body>
-<h1> Login</h1>
+
+<h1> iniciar sesion </h1>
+{% if form.errors %}
+<p class="error"> Lo sentimos, la contraseña y el nombre de usuario no son validos </p>
+{% endif %}
+{% csrf_token %}
 <form action="" method="post">
-		{% csrf_token%}
-<input type="hidden" name="action" value="login">
-   <input type="text" name="username">
-   <input type="password" name="password">
- <button type="submit">iniciar </button>
-<a href="registrar"> notienes cuenta?</a>
+	{% csrf_token %}
+	<label for="username"> nombre de usuario:</label>
+	<input type="text" name="username" value="" id="username" placeholder="ingrese su email">
+	<br>
+	<label for="password">contraseña:  </label>
+	<input type="password" name="password" value="" id="" placeholder="ingrese su contraseña aqui">
+	<br>
+	<input type="submit" value="login"/>
+	<input type="hidden" name="next" value="{{next|escape}}"/>
 </form>
-</body>
-</html>
+<br>
+<a href="{% url 'login_registrar:registrar' %}"> que paso amiguito</a>
+

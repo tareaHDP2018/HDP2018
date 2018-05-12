@@ -6,13 +6,11 @@
 </head>
 <body>
 	<h1> signup</h1>
-<form action="" method="post">
-		{% csrf_token %}
-<input type="hidden" name="action" value="signup">
-   <input type="text" name="username">
-   <input type="password" name="password">
-   <input type="date" name="fecha">
- <button type="submit">iniciar </button>
+<form method="post">
+{% csrf_token %}
+ {{form.as_p}}
+ 
+ <button type="submit"> registrarse</button>
 </form>
 	
 </body>

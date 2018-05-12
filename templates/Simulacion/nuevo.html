@@ -29,6 +29,7 @@
 			<label class="checkbox">{{fases.descripcion}}</label>
 			
 			<input type="checkbox" value="{{fases.id}}" name="fase" id="fase" />
+
 			{% endfor %}
 			{% else %}
 			<h1>No hay etapas que simular</h1>
@@ -75,6 +76,11 @@
     	</div>
       </div>
 	</div>
+
+	<div class="botones">
+        <button type="submit" class="btn btn-primary ">Guardar</button>
+        <a class="btn btn-danger " href="">Cancelar</a>
+    </div>
 	
 </form>
 

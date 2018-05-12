@@ -21,6 +21,7 @@ class RegistrarForm(forms.ModelForm):
 
 	password = forms.CharField(widget=forms.PasswordInput,max_length=8)
 	fechaNacimiento=forms.DateField(label='Fecha de nacimiento',widget = forms.SelectDateWidget(years=year))
+	sexo=forms.CharField(widget=forms.Select("masculino"))
 	class Meta:
 		model=Usuario
 		fields= '__all__'

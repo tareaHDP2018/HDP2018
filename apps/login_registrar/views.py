@@ -21,19 +21,28 @@ def logout (request):
     return HttpResponseRedirect("/login")
 
 def registrar(request):
+    error=''
     if request.method=='POST':
         form = RegistrarForm(request.POST)
-        if form.is_valid():
+        nom=request.POST.get('nombre',None)
+        us=Usuario.objects.filter(nombre=nom).exists()
+        if us==False and form.is_valid(): 
             usuario=form.save()
             usuario.save()
             user=User.objects.create_user(username=usuario.nombre,password=usuario.password)
-            user.save()
+            user=authenticate(username=usuario.nombre,password=usuario.password)
+            login(request)
             return HttpResponseRedirect('/simula')     
+        else:
+         form=RegistrarForm()
+         error="error el nombre de usuario ya esta en uso"
+
     else:
-        form=RegistrarForm()
+      form=RegistrarForm()
     template=loader.get_template('sesion/registrar.html')
     context={
-    'form':form
+    'form':form,
+    'error':error
     }
     return HttpResponse(template.render(context,request))
 

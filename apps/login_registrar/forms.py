@@ -16,12 +16,14 @@ year=('1930','1931','1932','1933','1934','1935','1936','1937','1938','1939',
 	'1990','1991','1992','1993','1994','1995','1996','1997','1998','1999',
 	'2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010',
 	)
+genero=(('masculino','masculino')
+	,('femenino','femenino'))
 
 class RegistrarForm(forms.ModelForm):
-
+	nombre=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'su nombre de usuario aqui'}))
 	password = forms.CharField(widget=forms.PasswordInput,max_length=8)
 	fechaNacimiento=forms.DateField(label='Fecha de nacimiento',widget = forms.SelectDateWidget(years=year))
-	sexo=forms.CharField(widget=forms.Select())
+	sexo=forms.ChoiceField(widget=forms.Select,choices=genero)
 	class Meta:
 		model=Usuario
 		fields= '__all__'

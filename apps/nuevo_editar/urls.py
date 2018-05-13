@@ -3,7 +3,7 @@ from apps.nuevo_editar.views import simulacionCrear,index,grafico
 
 urlpatterns=[
 url(r'^$',index),
-url(r'^simulacion$',simulacionCrear,name='nuevaSimulacion'),
+url(r'^simulacion$',simulacionCrear.as_view(),name='nuevaSimulacion'),
 url(r'^grafico$',grafico,name='graficos'),
 
 

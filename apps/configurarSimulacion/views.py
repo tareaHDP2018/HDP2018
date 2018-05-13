@@ -1,16 +1,22 @@
 from django.shortcuts import render,redirect
 from apps.configurarSimulacion.models import Configuracion
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from apps.configurarSimulacion.forms import *
 
 # Create your views here.
 def index(request):
+	if not request.user.is_active:
+			return redirect('/')
 	return render(request,'Simulacion/index.html')
 
 def nuevo(request):
+	if not request.user.is_active:
+			return redirect('/')
 	return render(request,'Simulacion/nuevo.html')
 
 def configuracion(request):
+	if not request.user.is_authenticated():
+			return HttpResponseRedirect('/')
 	if request.method == 'POST':
 	   configurar = Configuracion()
 	   configurar.temperaturaMax = request.POST['temperaturaMax']

@@ -6,13 +6,15 @@ class SimulacionForm(forms.ModelForm):
  		model = Simulacion
 
  		fields=[
+
+ 		 'nombre',
+ 		 'lineaSiembra',
  		 'faseCultivo',
+ 		 
  		]
 
- 		labels={
- 		'faseCultivo':'Fases de cultivo'
- 		}
-
  		widgets={
+ 		'nombre':forms.TextInput(attrs={'class':'form-control'}),
+		'lineaSiembra':forms.TextInput(attrs={'class':'form-control'}),
  		'faseCultivo':forms.CheckboxSelectMultiple(attrs={'class':'Checkbox'}),
  		}

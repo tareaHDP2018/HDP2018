@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Usuario(models.Model):
 	nombre = models.CharField(max_length=50)
 	apellido = models.CharField(max_length=50)
+	nombre_usuario = models.CharField(max_length=50)
 	password = models.CharField(max_length=256)
 	fechaNacimiento = models.DateField()
 	sexo = models.CharField(max_length=9)
@@ -37,8 +38,8 @@ class Simulacion(models.Model):
 	lineaSiembra = models.IntegerField()
 	estado = models.IntegerField()
 	configuracion = models.OneToOneField(Configuracion, blank=False)
-	siembra = models.OneToOneField(Siembra, null=True, blank=False)
-	faseCultivo =models.ManyToManyField(FaseCultivo)
+	siembra = models.ForeignKey(Siembra, null=True, blank=False)
+	faseCultivo =models.ManyToManyField(FaseCultivo,blank=True)
 	usuario = models.ForeignKey(Usuario,null=True,blank=False)
 	def __str__(self):
 		return self.nombre  

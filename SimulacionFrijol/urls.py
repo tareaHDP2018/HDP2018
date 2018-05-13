@@ -22,6 +22,7 @@ urlpatterns = [
     
     url(r'^',include('apps.login_registrar.urls',namespace="login")),
     url(r'^nuevo/',include('apps.nuevo_editar.urls',namespace="nuevo")),
+    url(r'^consultar/',include('apps.consultar.urls',namespace="consulta")),
     #AQUI VAN A AGREGAR CADA UNO SUS URL GLOBLAES, Y CADA QUIEN TRABAJARA EN SU APPS ASIGNADA,
     # NO TOQUEN LAS URLS YA DEFINIDAS SIN PREVIO AVISO EN EL GRUPO
 ]

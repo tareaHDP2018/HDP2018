@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block Contenido %}
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+			<td>Linea de siembra</td>
+			<td>Estado</td>
+			<td>Configuracion</td>
+			<td>Siembra</td>
+			<td>Fase del cultivo</td>
+			<td>Usuario</td>
+		</tr>
+	</thead>
+
+	<tbody>
+		{% if simulaciones %}
+		{% for simulacion  in simulaciones %}
+		<tr>
+		<td>{{ simulacion.nombre }}</td>
+		<td>{{ simulacion.lineaSiembra }}</td>
+		<td>{{ simulacion.estado }}</td>
+		<td>{{ simulacion.configuracion.distanciaLinea }}</td>
+		<td>{{ simulacion.siembra.nombre }}</td>
+		<td>{{ simulacion.faseCultivo.etapa }}</td>
+		<td>{{ simulacion.usuario.nombre }} {{ simulacion.usuario.apellido }}</td>
+		
+		</tr>
+
+		{% endfor %} 
+
+		{% else %}
+		<h1>No hay registros de simulaciones</h1>
+
+		{% endif %}
+	</tbody>
+</table>
+{% endblock Contenido%}

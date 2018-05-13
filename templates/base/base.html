@@ -20,10 +20,12 @@
       				<li><a href="">Mis simulaciones</a></li>
       				<li><a href="">Opciones</a>
 						<ul class="submenu">
-							<li><a href="">Salir</a></li>
+							<li><a href="{% url 'login_registrar:lo' %}">Salir</a></li>
 						</ul>
       				</li>
-      				
+      				<li>
+      				{{user.username}}
+      			</li>
 
       			</ul>
       		</nav>

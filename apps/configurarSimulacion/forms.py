@@ -1,7 +1,7 @@
 from django import forms
 from apps.configurarSimulacion.models import Configuracion
 
-class ConfigurarForms(forms.ModelForm):
+class ConfigurarForm(forms.ModelForm):
 	class Meta:
 		model = Configuracion
 
@@ -15,14 +15,15 @@ class ConfigurarForms(forms.ModelForm):
 		]
 
 		labels={
-		 'temperaturaMax':'Temperatura maxima',
-		  'temperaturaMin':'Temperatura minima',
+		  'temperaturaMax':'Temperatura maxima',
+		  'temperaturaMin':'TemperaturaMinima',
 		  'humedad':'Humedad',
 		  'altitud':'Altitud',
 		  'luminosidad':'Luminosidad',
-		  'distanciaLinea':'Distancia entre lienas',
+		  'distanciaLinea':'Distancia entre linea',
 		}
 
+	
 		widgets={
 		  'temperaturaMax':forms.TextInput(attrs={'class':'form-control'}),
 		  'temperaturaMin':forms.TextInput(attrs={'class':'form-control'}),

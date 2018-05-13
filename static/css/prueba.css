@@ -1,0 +1,9 @@
+#formulario{
+	border: 1px solid white;
+	float: left;
+	width: 500px;
+	margin:auto;
+	margin-left:500px; 
+	margin-top:200px; 
+	text-align: center;
+}

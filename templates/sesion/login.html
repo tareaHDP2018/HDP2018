@@ -1,20 +1,20 @@
-
-<h1> iniciar sesion </h1>
-{% if form.errors %}
-<p class="error"> Lo sentimos, la contraseña y el nombre de usuario no son validos </p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+</head>
+<body>
+	<h1> Login</h1>
+<form method="post">
 {% csrf_token %}
-<form action="" method="post">
-	{% csrf_token %}
-	<label for="username"> nombre de usuario:</label>
-	<input type="text" name="username" value="" id="username" placeholder="ingrese su email">
-	<br>
-	<label for="password">contraseña:  </label>
-	<input type="password" name="password" value="" id="" placeholder="ingrese su contraseña aqui">
-	<br>
-	<input type="submit" value="login"/>
-	<input type="hidden" name="next" value="{{next|escape}}"/>
+ {{form.as_p}}
+ 
+ <button type="submit"> login</button>
 </form>
-<br>
-<a href="{% url 'login_registrar:registrar' %}"> que paso amiguito</a>
+	{{error}}
+	<a href="{% url 'login_registrar:registrar' %}"> que paso amiguito</a>
+</body>
+</html>
+
 

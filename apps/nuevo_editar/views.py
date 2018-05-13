@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from apps.nuevo_editar.forms import SimulacionForm
-from apps.configurarSimulacion.forms import ConfigurarForm
+from apps.nuevo_editar.forms import SimulacionForm, ConfigurarForm
+#from apps.configurarSimulacion.forms import ConfigurarForm
 from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,FaseCultivo
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
@@ -44,23 +44,33 @@ def index(request):
 	return render(request,'Simulacion/nuevo.html',contexto)
 """
 class simulacionCrear(CreateView):
-	siembras = Siembra.objects.get(id=1)
 	model = Simulacion
 	template_name = 'Simulacion/nuevo.html'
 	form_class = SimulacionForm
 	second_form_class = ConfigurarForm
 	success_url = reverse_lazy('nuevo:graficos')
 
+
+	def get_context_data(self,**kwargs):
+		context = super(simulacionCrear,self).get_context_data(**kwargs)
+		if 'form' not in context:
+			context['form']=self.form_class(self.request.GET)
+		if 'form2' not in context:
+			context['form2']=self.second_form_class(self.request.GET)
+		return context
+
 	def post(self,request,*args,**kwargs):
+		siembras = Siembra.objects.get(id=1)
 		self.object = self.get_object
 		form = self.form_class(request.POST)
 		form2 = self.second_form_class(request.POST)
 		if form.is_valid() and form2.is_valid():
 			simula = form.save(commit=False)
+			#simula.faseCultivo = request.POST["faseCultivo"]
 			simula.estado = 1
 			simula.siembra = siembras
-			#simula.usuario = 1
 			simula.configuracion = form2.save()
+			#simula.usuario = 1
 			simula.save()
 			return HttpResponseRedirect(self.get_success_url())
 		else:

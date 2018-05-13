@@ -37,8 +37,8 @@ class Simulacion(models.Model):
 	lineaSiembra = models.IntegerField()
 	estado = models.IntegerField()
 	configuracion = models.OneToOneField(Configuracion, blank=False)
-	siembra = models.OneToOneField(Siembra, null=True, blank=False)
-	faseCultivo =models.ManyToManyField(FaseCultivo)
+	siembra = models.ForeignKey(Siembra, null=True, blank=False)
+	faseCultivo =models.ManyToManyField(FaseCultivo,blank=True)
 	usuario = models.ForeignKey(Usuario,null=True,blank=False)
 	def __str__(self):
 		return self.nombre  

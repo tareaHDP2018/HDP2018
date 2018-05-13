@@ -35,6 +35,8 @@
 			<h1>No hay etapas que simular</h1>
 			{% endif %}-->
 			{{ form.as_table }}
+			
+		    
 		</div>
 	</div>
 <!--	<div class="botones">
@@ -54,26 +56,26 @@
            </div>
            <div class="modal-body">
            	{% csrf_token %}
-          	{{ form2.as_table}}
-          <!--     <label>Temperatura Maxima</label>
+         	{{ form2.as_p}}
+         <!--    <label>Temperatura Maxima</label>
               <input type="number" name="temperaturaMax" id="temperaturaMax" value="25" placeholder="Centigrados" class="form-control"/>
               <label>Temperatura Minima</label>
               <input type="number" name="temperaturaMin" id="temperaturaMin" value="10" placeholder="Centigrados" class="form-control"/>
               <div class="form-group">
               <label>Humedad</label>
-              <input type="number" name="humedad" id="humedad" value="" placeholder="milimetros lluvia" class="form-control"/>
+              <input type="number" name="humedad" id="humedad" value="10" placeholder="milimetros lluvia" class="form-control"/>
               </div>
               <div class="form-group">
               <label>Altitud</label>
-              <input type="number" name="altitud" id="altitud" value="" placeholder="msnm" class="form-control"/>
+              <input type="number" name="altitud" id="altitud" value="10" placeholder="msnm" class="form-control"/>
               </div>
               <div class="form-group">
               <label>Luminosidad</label>
-              <input type="number" name="luminosidad" id="luminosidad" value="" placeholder="" class="form-control"/>
+              <input type="number" name="luminosidad" id="luminosidad" value="10" placeholder="" class="form-control"/>
               </div>
               <div class="form-group">
               <label>Distancia entre Linea</label>
-              <input type="number" name="distanciaL" id="distanciaL" value="" placeholder="centimetros" class="form-control"/>
+              <input type="number" name="distanciaL" id="distanciaL" value="10" placeholder="centimetros" class="form-control"/>
               </div>-->
            </div>
            <div class="modal-footer">

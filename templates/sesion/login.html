@@ -1,19 +1,27 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Login</title>
+	<link rel="stylesheet" href="static/css/bootstrap.min.css">
+<link rel="stylesheet" href="static/css/prueba.css">
 </head>
 <body>
-	<h1> Login</h1>
+	
+	<div id="formulario">
+		<h1> Login</h1>
+<div class="form-group" >
 <form method="post">
 {% csrf_token %}
  {{form.as_p}}
  
- <button type="submit"> login</button>
+ <button type="submit" class="btn btn-primary">Login</button>
 </form>
+</div>
 	{{error}}
-	<a href="{% url 'login_registrar:registrar' %}"> que paso amiguito</a>
+	<a href="{% url 'login_registrar:registrar' %}">¿ no tienes una cuenta? te invitamos a crear una</a>
+	</div>
 </body>
 </html>
 

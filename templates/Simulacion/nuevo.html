@@ -9,7 +9,7 @@
    
 	<div class="form-group ">
 		<div class="form-group">
-		<!--	<p>Nombre Simulacion:</p>
+			<p>Nombre Simulacion:</p>
 			<input type="text" name="simulacion" value="" class="form-control"/>
 		</div>
 		<div class="col-xs-2">
@@ -26,15 +26,14 @@
 		</br>
 			{% if fase %}
 			{% for fases in fase %}
-			<label class="checkbox">{{fases.descripcion}}</label>
-			
 			<input type="checkbox" value="{{fases.id}}" name="fase" id="fase" />
-
+			<label class="checkbox">{{fases.descripcion}}</label>
+	        </br>
 			{% endfor %}
 			{% else %}
 			<h1>No hay etapas que simular</h1>
-			{% endif %}-->
-			{{ form.as_table }}
+			{% endif %}
+			<!--{{ form.as_table }}-->
 			
 		    
 		</div>
@@ -56,8 +55,8 @@
            </div>
            <div class="modal-body">
            	{% csrf_token %}
-         	{{ form2.as_p}}
-         <!--    <label>Temperatura Maxima</label>
+         <!-- 	{{ form2.as_p}}-->
+              <label>Temperatura Maxima</label>
               <input type="number" name="temperaturaMax" id="temperaturaMax" value="25" placeholder="Centigrados" class="form-control"/>
               <label>Temperatura Minima</label>
               <input type="number" name="temperaturaMin" id="temperaturaMin" value="10" placeholder="Centigrados" class="form-control"/>
@@ -76,7 +75,7 @@
               <div class="form-group">
               <label>Distancia entre Linea</label>
               <input type="number" name="distanciaL" id="distanciaL" value="10" placeholder="centimetros" class="form-control"/>
-              </div>-->
+              </div>
            </div>
            <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

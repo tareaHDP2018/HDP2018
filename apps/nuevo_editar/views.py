@@ -11,7 +11,7 @@ from django.views.generic import ListView,CreateView,DeleteView,UpdateView,View
 def index(request):
 	return render(request,'Simulacion/index.html')
 
-"""def simulacionCrear(request):
+def simulacionCrear(request):
 	siembras = Siembra.objects.get(id=1)
 	fase = FaseCultivo.objects.all().order_by('id')
 	forms = SimulacionForm
@@ -26,14 +26,16 @@ def index(request):
 		confi.luminosidad = request.POST['luminosidad']
 		confi.distanciaLinea = request.POST['distanciaL']
 		confi.save()
+		confi_id = Configuracion.objects.latest('id')
+
 		forms = SimulacionForm(request.POST)
 		simula.nombre = request.POST['simulacion']
 		simula.lineaSiembra = request.POST['linea']
 		simula.estado = 1
 		simula.siembra = siembras
 		#simula.usuario = 1
-		simula.configuracion=simula.id 
-		simula.faseCultivo = forms.save()
+		simula.configuracion=confi_id
+		#simula.faseCultivo = forms.save()
 		
 		simula.save()
 		
@@ -74,7 +76,7 @@ class simulacionCrear(CreateView):
 			simula.save()
 			return HttpResponseRedirect(self.get_success_url())
 		else:
-			return self.render_to_response(self.get_context_data(form=form,form2=form2))
+			return self.render_to_response(self.get_context_data(form=form,form2=form2))"""
 
 def grafico(request):
 	return render(request,'Simulacion/grafico.html')

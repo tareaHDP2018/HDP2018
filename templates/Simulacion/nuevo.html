@@ -4,36 +4,66 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static "css/nuevo.css" %}"/>
-<form class="formulario" method="POST">
+<form class="formulario" name="f1" method="POST">
 	 {% csrf_token %}
    
 	<div class="form-group ">
 		<div class="form-group">
-			<p>Nombre Simulacion:</p>
+			<p><strong>Nombre Simulacion:</strong></p>
 			<input type="text" name="simulacion" value="" class="form-control"/>
 		</div>
 		<div class="col-xs-2">
-			<label for="ex1">Lineas de siembra</label>
+			<label for="ex1"><strong>Lineas de siembra:</strong></label>
 			<input type="number" name="linea" id="ex1" class="form-control"/>
 		</div>
 		</br>
 		<div class="form-group">
-			<label>Siembra</label>
+			<label><strong>Siembra:</strong></label>
 			<h2>{{siembras.nombre}}</h2>
 		</div>
 		<div class="form-group">
 			<strong>Fases de cultivo</strong>
 		</br>
-			{% if fase %}
+		<!--	{% if fase %}
 			{% for fases in fase %}
-			<input type="checkbox" value="{{fases.id}}" name="fase" id="fase" />
+			<input type="checkbox"  name="fase" id="fase" />
 			<label class="checkbox">{{fases.descripcion}}</label>
 	        </br>
 			{% endfor %}
 			{% else %}
 			<h1>No hay etapas que simular</h1>
 			{% endif %}
-			<!--{{ form.as_table }}-->
+			{{ form.as_table }}-->
+			<div>
+			<input type="checkbox"  name="germinacion" id="germinacion"  />
+			<strong>Germinacion</strong>
+			</div>
+			<div>
+			<input type="checkbox"  name="emergencia" id="emergencia"  />
+			<strong>Emergencia</strong>
+			</div>
+			<div>
+			<input type="checkbox"  name="hojaPrimaria" id="hojaPrimaria"  />
+			<strong>Hojas Primarias</strong>
+			</div>
+			<div>
+			<input type="checkbox"  name="primeraHoja" id="primeraHoja"  />
+			<strong>Primera Hoja Trifoliada</strong>
+			</div>
+			<div>
+			<input type="checkbox"  name="terceraHoja" id="terceraHoja"  />
+			<strong>Tercera Hoja Trifoliada</strong>
+			</div>
+			<div>
+			<input type="checkbox"  name="prefloracion" id="prefloracion"  />
+			<strong>Prefloracion</strong>
+			</div>
+			<div>
+			<input type="checkbox"  name="floracion" id="floracion"  />
+			<strong>Floracion</strong>
+			</div>
+			<a href="javascript:seleccionar_todo()"><strong>Marcar todos</strong></a> | 
+			<a href="javascript:deseleccionar_todo()"><strong>Desmarcar</strong></a>
 			
 		    
 		</div>
@@ -42,10 +72,13 @@
         <button type="submit" class="btn btn-primary ">Guardar y Simular</button>
         <a class="btn btn-danger " href="">Cancelar</a>
     </div>-->
-	<div class="container">
-		<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">Configuracion</button>
+    <div class="container">
+    	<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">Configuracion</button>
 		<button type="submit" class="btn btn-primary ">Guardar y Simular</button>
         <a class="btn btn-danger " href="">Cancelar</a>
+    </div>
+	<div class="container">
+		
 	  <div class="modal fade" id="myModal" role="dialog">
     	<div class="modal-dialog">
     	 <div class="modal-content">
@@ -88,6 +121,19 @@
       </div>
 	</div>
 
+<script type="text/javascript">
+	function seleccionar_todo(){ 
+   for (i=0;i<document.f1.elements.length;i++) 
+      if(document.f1.elements[i].type == "checkbox")	
+         document.f1.elements[i].checked=1 
+} 
+
+function deseleccionar_todo(){ 
+   for (i=0;i<document.f1.elements.length;i++) 
+      if(document.f1.elements[i].type == "checkbox")	
+         document.f1.elements[i].checked=0 
+}
+</script>
 
 	
 </form>

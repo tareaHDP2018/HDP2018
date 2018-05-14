@@ -26,12 +26,13 @@ class Configuracion(models.Model):
 	distanciaLinea = models.DecimalField(max_digits=5,decimal_places=2)
 
 class FaseCultivo(models.Model):
-	etapa = models.IntegerField()
-	descripcion = models.CharField(max_length=30)
-	diasDuracion = models.IntegerField()
-	hidricos = models.DecimalField(max_digits=5,decimal_places=2)
-	def __str__(self):
-		return self.descripcion 
+	germinacion = models.BooleanField(default=0)
+	mergencia = models.BooleanField(default=0)
+	hojaPrimaria = models.BooleanField(default=0)
+	primeraHoja = models.BooleanField(default=0)
+	terceraHoja = models.BooleanField(default=0)
+	prefloracion = models.BooleanField(default=0)
+	floracion = models.BooleanField(default=0) 
 
 class Simulacion(models.Model):
 	nombre = models.CharField(max_length=50)
@@ -39,7 +40,7 @@ class Simulacion(models.Model):
 	estado = models.IntegerField()
 	configuracion = models.OneToOneField(Configuracion, blank=False)
 	siembra = models.ForeignKey(Siembra, null=True, blank=False)
-	faseCultivo =models.ManyToManyField(FaseCultivo,blank=True)
+	faseCultivo =models.ForeignKey(FaseCultivo,blank=True)
 	usuario = models.ForeignKey(Usuario,null=True,blank=False)
 	def __str__(self):
 		return self.nombre  

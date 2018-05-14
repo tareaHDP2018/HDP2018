@@ -18,6 +18,17 @@ def simulacionCrear(request):
 	if request.method == 'POST':
 		simula = Simulacion()
 		confi = Configuracion()
+		fase = FaseCultivo()
+		fase.germinacion=True if request.POST.get('germinacion') else False
+		fase.mergencia=True if request.POST.get('mergencia') else False
+		fase.hojaPrimaria=True if request.POST.get('hojaPrimaria') else False
+		fase.primeraHoja=True if request.POST.get('primeraHoja') else False
+		fase.terceraHoja=True if request.POST.get('terceraHoja') else False
+		fase.prefloracion=True if request.POST.get('prefloracion') else False
+		fase.floracion=True if request.POST.get('floracion') else False
+	
+		fase.save()
+		fase_id = FaseCultivo.objects.latest('id')
 		
 		confi.temperaturaMax = request.POST['temperaturaMax']
 		confi.temperaturaMin = request.POST['temperaturaMin']
@@ -28,20 +39,17 @@ def simulacionCrear(request):
 		confi.save()
 		confi_id = Configuracion.objects.latest('id')
 
-		forms = SimulacionForm(request.POST)
 		simula.nombre = request.POST['simulacion']
 		simula.lineaSiembra = request.POST['linea']
 		simula.estado = 1
 		simula.siembra = siembras
 		#simula.usuario = 1
 		simula.configuracion=confi_id
-		#simula.faseCultivo = forms.save()
-		
+		simula.faseCultivo = fase_id
 		simula.save()
+		#variable = request.POST['temperaturaMax']
 		
-		#forms.save()
-		
-		return redirect('nuevo:graficos')
+		return redirect('consulta:consultar')
 	contexto = {'siembras':siembras,'fase':fase,'forms':forms}
 	return render(request,'Simulacion/nuevo.html',contexto)
 """

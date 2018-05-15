@@ -1,6 +1,8 @@
 {% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title%}Consultar{% endblock %}
 
-{% block Contenido %}
+{% block content %}
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -10,13 +12,12 @@
 			<td>Configuracion</td>
 			<td>Siembra</td>
 			<td>Fase del cultivo</td>
-			<td>Usuario</td>
 		</tr>
 	</thead>
 
 	<tbody>
 		{% if simulaciones %}
-		{% for simulacion  in simulaciones %}
+		{% for simulacion  in simulaciones.all %}
 		<tr>
 		<td>{{ simulacion.nombre }}</td>
 		<td>{{ simulacion.lineaSiembra }}</td>
@@ -25,7 +26,6 @@
 		<td>{{ simulacion.siembra.nombre }}</td>
 		<td>{{ simulacion.faseCultivo.etapa }}</td>
 		<td>{{ simulacion.usuario.nombre }} {{ simulacion.usuario.apellido }}</td>
-		
 		</tr>
 
 		{% endfor %} 
@@ -36,4 +36,5 @@
 		{% endif %}
 	</tbody>
 </table>
-{% endblock Contenido%}
+{% endblock %}
+

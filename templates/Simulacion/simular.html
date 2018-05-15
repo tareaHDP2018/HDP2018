@@ -1,0 +1,89 @@
+{% extends 'base/base.html'%}
+
+{% block title%}Simular{% endblock %}
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td><strong>Nombre</strong></td>
+			<td><strong>Lineas de siembra</strong></td>
+			<td><strong>Siembra</strong></td>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+		{% if simula %}
+		
+		<tr>
+		<td>{{ simula.nombre }}</td>
+		<td>{{ simula.lineaSiembra }}</td>
+		<td>{{ simula.siembra.nombre }}</td>
+		</tr>
+
+		{% else %}
+		<h1>No hay registros de simulacion</h1>
+
+		{% endif %}
+	</tbody>
+	
+</table>
+<table class="table table-bordered">
+	<thead>
+		<td><strong>Germinacion</strong></td>
+		<td><strong>Emergencia</strong></td>
+		<td><strong>Hoja Primaria</strong></td>
+		<td><strong>Primera Hoja</strong> </td>
+		<td><strong>Tercera Hoja</strong></td>
+		<td><strong>Prefloracion</strong></td>
+		<td><strong>Floracion</strong></td>
+
+	</thead>
+	<tbody>
+		<tr>
+			{% if simula.faseCultivo.germinacion %}
+			<td>Seleccion</td>
+			{% else %}
+			<td>No seleccionado</td>
+			{% endif %}
+			{% if simula.faseCultivo.mergencia %}
+			<td>Seleccion</td>
+			{% else %}
+			<td>No seleccionado</td>
+			{% endif %}
+			{% if simula.faseCultivo.hojaPrimaria %}
+			<td>Seleccion</td>
+			{% else %}
+			<td>No seleccionado</td>
+			{% endif %}
+			{% if simula.faseCultivo.primeraHoja %}
+			<td>Seleccion</td>
+			{% else %}
+			<td>No seleccionado</td>
+			{% endif %}
+			{% if simula.faseCultivo.terceraHoja %}
+			<td>Seleccion</td>
+			{% else %}
+			<td>No seleccionado</td>
+			{% endif %}
+			{% if simula.faseCultivo.prefloracion %}
+			<td>Seleccion</td>
+			{% else %}
+			<td>No seleccionado</td>
+			{% endif %}
+			{% if simula.faseCultivo.floracion %}
+			<td>Seleccion</td>
+			{% else %}
+			<td>No seleccionado</td>
+			{% endif %}
+		</tr>
+	</tbody>
+	
+</table>
+<div>
+		<a class = "btn btn-primary" href="{% url 'nuevo:graficos' simula.id %}">Simular</a>
+	</div>
+
+{% endblock %}

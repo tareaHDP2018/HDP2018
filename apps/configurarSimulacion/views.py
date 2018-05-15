@@ -5,18 +5,18 @@ from apps.configurarSimulacion.forms import *
 
 # Create your views here.
 def index(request):
-	if not request.user.is_active:
-			return redirect('/')
+	#if not request.user.is_active:
+	#		return redirect('/')
 	return render(request,'Simulacion/index.html')
 
 def nuevo(request):
-	if not request.user.is_active:
-			return redirect('/')
+	#if not request.user.is_active:
+	#		return redirect('/')
 	return render(request,'Simulacion/nuevo.html')
 
 def configuracion(request):
-	if not request.user.is_authenticated():
-			return HttpResponseRedirect('/')
+	#if not request.user.is_active:
+	#		return HttpResponseRedirect('/')
 	if request.method == 'POST':
 	   configurar = Configuracion()
 	   configurar.temperaturaMax = request.POST['temperaturaMax']

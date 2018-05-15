@@ -1,9 +1,8 @@
 #formulario{
-	border: 1px solid white;
+	border: 3px solid white;
 	float: left;
-	width: 500px;
-	margin:auto;
-	margin-left:500px; 
+	width: 400px;
+	margin-left:200px; 
 	margin-top:200px; 
 	text-align: center;
 }

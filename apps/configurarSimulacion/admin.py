@@ -8,4 +8,4 @@ admin.site.register(FaseCultivo)
 admin.site.register(Simulacion)
 @admin.register(Usuario)
 class AdminUsuarios(admin.ModelAdmin):
-	list_display=('nombre','apellido','password','fechaNacimiento','sexo')
+	list_display=('nombre','nombre_usuario','apellido','password','fechaNacimiento','sexo')

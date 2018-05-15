@@ -8,6 +8,8 @@ from django.views.generic import ListView,CreateView,DeleteView,UpdateView,View
 
 # Create your views here.
 def index(request):
+	#if not request.user.is_active:
+			#return redirect('/')
 	return render(request,'Simulacion/index.html')
 
 def simulacionCrear(request):

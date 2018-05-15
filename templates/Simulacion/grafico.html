@@ -5,5 +5,39 @@
 {% block content %}
 
 
+ {% if simula.faseCultivo.germinacion  %}
+   <strong>Germinacion</strong>
+ {% endif %}
+ {% if simula.faseCultivo.mergencia %}
+   <strong>Emergencia</strong>
+ {% endif %}
+ {% if simula.faseCultivo.hojaPrimaria %}
+   <strong>Hoja Primaria</strong>
+ {% endif %}
+ {% if simula.faseCultivo.primeraHoja %}
+   <strong>Primera Hoja </strong>
+ {% endif %}
+ {% if simula.faseCultivo.terceraHoja %}
+   <strong>Tercera Hoja</strong>
+ {% endif %}
+ {% if simula.faseCultivo.prefloracion %}
+   <strong>Prefloracion</strong>
+ {% endif %}
+ {% if simula.faseCultivo.floracion %}
+   <strong>Floracion</strong>
+ {% endif %}
+</br>
+{% for b in tiempo %}
+  {% if b != 0 %}
+  {{b}}
+  {% endif %} 
+{% endfor %}
+</br>
+{% for a in nodos %}
+ {% if a != 0 %}
+   {{a}}
+ {% endif %}
+
+{% endfor %}
 
 {% endblock %}

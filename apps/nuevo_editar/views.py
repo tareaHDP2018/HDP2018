@@ -3,7 +3,7 @@ from apps.nuevo_editar.forms import SimulacionForm, ConfigurarForm
 from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,FaseCultivo,Usuario
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
-
+from decimal import *
 from django.views.generic import ListView,CreateView,DeleteView,UpdateView,View
 
 # Create your views here.
@@ -56,7 +56,102 @@ def simular(request):
 
 
 def grafico(request,idSimulacion):
+	e = 2.718281828
 	simula = Simulacion.objects.get(id=idSimulacion)
+	altura = simula.configuracion.altitud
+	tMaxima = simula.configuracion.temperaturaMax
+	tMinima = simula.configuracion.temperaturaMin
+	humedad = simula.configuracion.humedad
+	if tMinima < 8:
+		rT = 0
+	elif tMaxima <= 12:
+		rT = 0.55
+	elif tMaxima <= 29:
+		rT = 0.75
+	elif tMaxima <= 35:
+		rT = 1
+	elif tMaxima <= 50:
+		rT=0
+
+	tiempo = tiempoDia(simula)
+	hFase = hidricoFase(simula)
+	contador = len(tiempo)
+	tiempo2=[]
+	for a in tiempo:
+		tiempo2.append(float(a))
+
+	rm = Decimal((altura))*Decimal((0.021))
+	N=[]
+	for t in tiempo2:
+		if t == 0:
+			N.append(0)
+		else:
+			getcontext().prec = 4
+			N.append(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)) 
+
+	return render(request,'Simulacion/grafico.html',{'nodos':N,'simula':simula,'tiempo':tiempo2,'hidrico':hFase,'humedad':humedad})
 
 
-	return render(request,'Simulacion/grafico.html')
+def tiempoDia(simulacion2):
+	t =[]
+	if simulacion2.faseCultivo.germinacion:
+		t.append("5")
+	else:
+		t.append("0")
+	if simulacion2.faseCultivo.mergencia:
+		t.append("2")
+	else:
+		t.append("0")
+	if simulacion2.faseCultivo.hojaPrimaria:
+		t.append("4")
+	else:
+		t.append("0")
+	if simulacion2.faseCultivo.primeraHoja:
+		t.append("5")
+	else:
+		t.append("0")
+	if simulacion2.faseCultivo.terceraHoja:
+		t.append("7")
+	else:
+		t.append("0")
+	if simulacion2.faseCultivo.prefloracion:
+		t.append("9")
+	else:
+		t.append("0")
+	if simulacion2.faseCultivo.floracion:
+		t.append("4")
+	else:
+		t.append("0")
+	return t 
+
+def hidricoFase(simulacion):
+	t =[]
+	if simulacion.faseCultivo.germinacion:
+		t.append(19.35)
+	else:
+		t.append(0)
+	if simulacion.faseCultivo.mergencia:
+		t.append(19.35)
+	else:
+		t.append(0)
+	if simulacion.faseCultivo.hojaPrimaria:
+		t.append(19.35)
+	else:
+		t.append(0)
+	if simulacion.faseCultivo.primeraHoja:
+		t.append(37.57)
+	else:
+		t.append(0)
+	if simulacion.faseCultivo.terceraHoja:
+		t.append(37.57)
+	else:
+		t.append(0)
+	if simulacion.faseCultivo.prefloracion:
+		t.append(48.1)
+	else:
+		t.append(0)
+	if simulacion.faseCultivo.floracion:
+		t.append(43.65)
+	else:
+		t.append(0)
+	return t

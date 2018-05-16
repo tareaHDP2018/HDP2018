@@ -1,30 +1,227 @@
-{% extends 'base/base.html'%}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grafico</title>
+	<script type="application/javascript" src="/static/js/Chart.bundle.js"></script>
+	<script type="application/javascript" src="/static/js/jquery-1.12.0.min.js" ></script>
+	<script  type="application/javascript" src="/static/js/jquery2.min.js"  ></script>
+	<link rel="stylesheet" type="text/css" href="{% static "css/estilo2.css" %}">
+	<script type="text/javascript">
 
-{% block title%}Grafico{% endblock %}
+		$(document).ready(function(){
+		var datos = {
+			type:"line",
+			data:{
+				datasets:[{
+					label: '# of Votes',
+					data:[
+					  8,6,7,8,9,
+					],
+				backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+            ],
+             borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+		}],	
+           labels:[
+          		 "Germinacion",
+           		 "Emergencia",
+           		 "Primera Hoja",
+           ]
+		},
+		options:{
+			responsive:true,
 
-{% block content %}
+		}
+            
+      };
+      var id = ["chart","chart2","chart3","chart4","chart5","chart6","chart7"];
+      for(i=0;i<7;i++){
+      	var canvas = document.getElementById(id[i]).getContext('2d');
+        window.line = new Chart(canvas,datos);
+      }
+      var canvas2 = document.getElementById("chart2").getContext('2d');
+      window.line = new Chart(canvas2,datos);
+	});
 
+</script>
+
+</head>
+<body>
+	<div class="container">
+		<header>
+			<nav class="navegacion">
+      			<ul class="menu">
+      				<li><a href="">Inicio</a></li>
+      				<li><a href="">SimulaFri</a></li>
+      				<li><a href="">Mis simulaciones</a></li>
+      				<li><a href="">Opciones</a>
+						<ul class="submenu">
+							<li><a href="{% url 'login_registrar:lo' %}">Salir</a></li>
+						</ul>
+      				</li>
+      				<li>
+      			</li>
+
+      			</ul>
+      		</nav>
+		</header>
+		
+	</div>
+
+<style type="text/css">
+	#canvas-container{
+		margin:30px auto;
+	}
+	#titulo{
+	margin: 30px auto;
+	}
+</style>
 
  {% if simula.faseCultivo.germinacion  %}
-   <strong>Germinacion</strong>
+   <h1 id="titulo" style="text-align: center"><strong> Germinacion</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart" width="300" height="150"></canvas>
+   </div>
  {% endif %}
  {% if simula.faseCultivo.mergencia %}
-   <strong>Emergencia</strong>
+   <script type="text/javascript">
+   $(document).ready(function(){
+		var datos = {
+			type:"line",
+			data:{
+				datasets:[{
+					label: '# of Votes',
+					data:[
+					  8,6,7,8,9,
+					],
+				backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+            ],
+             borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+		}],	
+           labels:[
+          		 "Germinacion",
+           		 "Emergencia",
+           		 "Primera Hoja",
+           ]
+		},
+		options:{
+			responsive:true,
+
+		}
+            
+      };
+    
+      var canvas = document.getElementById("chart2").getContext('2d');
+      window.line = new Chart(canvas,datos);
+	});
+   </script>
+   <h1 id="titulo" style="text-align: center"><strong id="titulo">Emergencia</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart2" width="300" height="150"></canvas>
+   </div>
  {% endif %}
  {% if simula.faseCultivo.hojaPrimaria %}
-   <strong>Hoja Primaria</strong>
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Hoja Primaria</strong></h1>
+   <script type="text/javascript">
+   $(document).ready(function(){
+		var datos = {
+			type:"line",
+			data:{
+				datasets:[{
+					label: '# of Votes',
+					data:[
+					  10,11,16,17,9,
+					],
+				backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+            ],
+             borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+		}],	
+           labels:[
+          		 "Hoja primaria",
+           		 "Prueba",
+           		 "Primera Hoja",
+           ]
+		},
+		options:{
+			responsive:true,
+
+		}
+            
+      };
+    
+      var canvas = document.getElementById("chart").getContext('2d');
+      window.line = new Chart(canvas,datos);
+	});
+   </script>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart3" width="300" height="150"></canvas>
+   </div>
  {% endif %}
  {% if simula.faseCultivo.primeraHoja %}
-   <strong>Primera Hoja </strong>
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Primera Hoja </strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart4" width="300" height="150"></canvas>
+   </div>
  {% endif %}
  {% if simula.faseCultivo.terceraHoja %}
-   <strong>Tercera Hoja</strong>
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Tercera Hoja</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart5" width="300" height="150"></canvas>
+   </div>
  {% endif %}
  {% if simula.faseCultivo.prefloracion %}
-   <strong>Prefloracion</strong>
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Prefloracion</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart6" width="300" height="150"></canvas>
+   </div>
  {% endif %}
  {% if simula.faseCultivo.floracion %}
-   <strong>Floracion</strong>
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Floracion</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart7" width="300" height="150"></canvas>
+   </div>
  {% endif %}
 </br>
 {% for b in tiempo %}
@@ -40,4 +237,13 @@
 
 {% endfor %}
 
-{% endblock %}
+
+
+
+</body>
+</html>
+
+
+
+	
+

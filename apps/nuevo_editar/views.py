@@ -23,7 +23,7 @@ def simulacionCrear(request):
 		confi = Configuracion()
 		fase = FaseCultivo()
 		fase.germinacion=True if request.POST.get('germinacion') else False
-		fase.mergencia=True if request.POST.get('mergencia') else False
+		fase.mergencia=True if request.POST.get('emergencia') else False
 		fase.hojaPrimaria=True if request.POST.get('hojaPrimaria') else False
 		fase.primeraHoja=True if request.POST.get('primeraHoja') else False
 		fase.terceraHoja=True if request.POST.get('terceraHoja') else False
@@ -91,9 +91,10 @@ def grafico(request,idSimulacion):
 			N.append(0)
 		else:
 			getcontext().prec = 4
-			N.append(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT))
+			N.append(str(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)))
 
-	numero = len(N) 
+	numero = len(N)
+	 
 
 	return render(request,'Simulacion/grafico.html',{'nodos':N,'simula':simula,'tiempo':tiempo2,'hidrico':hFase,'humedad':humedad,'numero':numero})
 

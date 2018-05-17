@@ -8,55 +8,197 @@
 	<script  type="application/javascript" src="/static/js/jquery2.min.js"  ></script>
 	<link rel="stylesheet" type="text/css" href="{% static "css/estilo2.css" %}">
 	<script type="text/javascript">
-
-		$(document).ready(function(){
-		var datos = {
-			type:"line",
-			data:{
-				datasets:[{
-					label: '# of Votes',
-					data:[
-					  8,6,7,8,9,
-					],
-				backgroundColor: [
+	
+	var nodos = unescape({{nodos|safe|escapejs}});
+	var json_data = JSON.parse(nodos);
+	console.log(json_data);
+	
+	var simula = "{{simula|safe}}";
+	var tiempo = "{{tiempo|safe}}";
+	var hFase = "{{hidrico|safe}}";
+	var humedad = "{{humedad|safe}}";
+	var i = 7;
+	var datos2 = [];
+	var arrayColor = [
                 'rgba(255, 99, 132, 0.5)',
                 'rgba(54, 162, 235, 0.5)',
                 'rgba(255, 206, 86, 0.5)',
                 'rgba(75, 192, 192, 0.5)',
                 'rgba(153, 102, 255, 0.5)',
                 'rgba(255, 159, 64, 0.5)',
-            ],
-             borderColor: [
+            ];
+     var arrayBorderColor = [
                 'rgba(255,99,132,1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
+                'rgba(255, 159, 64, 1)',
+            ];
+		$(document).ready(function(){
+		var datos = {
+			type:"bar",
+			data:{
+				datasets:[{
+					label:'Germinacion',
+					data:[1,2,3,4,5],
+				backgroundColor: arrayColor,
+             borderColor: arrayBorderColor,
             borderWidth: 1
 		}],	
+
            labels:[
-          		 "Germinacion",
-           		 "Emergencia",
-           		 "Primera Hoja",
+          		 "Dia 1","Dia 2","Dia 3","Dia 4","Dia 5",
            ]
 		},
 		options:{
 			responsive:true,
-
 		}
-            
       };
-      var id = ["chart","chart2","chart3","chart4","chart5","chart6","chart7"];
-      for(i=0;i<7;i++){
-      	var canvas = document.getElementById(id[i]).getContext('2d');
-        window.line = new Chart(canvas,datos);
-      }
-      var canvas2 = document.getElementById("chart2").getContext('2d');
-      window.line = new Chart(canvas2,datos);
-	});
 
+      var datos2 = {
+			type:"bar",
+			data:{
+				datasets:[{
+					label:'Emergencia',
+					data:[1,2,3,4,5],
+				backgroundColor: arrayColor,
+             borderColor: arrayBorderColor,
+            borderWidth: 1
+		}],	
+
+           labels:[
+          		 "Dia 1","Dia 2",,
+           ]
+		},
+		options:{
+			responsive:true,
+		}
+      };
+
+      var datos3 = {
+			type:"bar",
+			data:{
+				datasets:[{
+					label:'Hoja Primaria',
+					data:[1,2,3,4,5],
+				backgroundColor: arrayColor,
+             borderColor: arrayBorderColor,
+            borderWidth: 1
+		}],	
+
+           labels:[
+          		 "Dia 1","Dia 2","Dia 3","Dia 4",
+           ]
+		},
+		options:{
+			responsive:true,
+		}
+      };
+
+      var datos4 = {
+			type:"bar",
+			data:{
+				datasets:[{
+					label:'Primera Hoja',
+					data:[1,2,3,4,5],
+				backgroundColor: arrayColor,
+             borderColor: arrayBorderColor,
+            borderWidth: 1
+		}],	
+
+           labels:[
+          		 "Dia 1","Dia 2","Dia 3","Dia 4","Dia 5",
+           ]
+		},
+		options:{
+			responsive:true,
+		}
+      };
+
+      var datos5 = {
+			type:"bar",
+			data:{
+				datasets:[{
+					label:'Tercera Hoja',
+					data:[1,2,3,4,5],
+				backgroundColor: arrayColor,
+             borderColor: arrayBorderColor,
+            borderWidth: 1
+		}],	
+
+           labels:[
+          		 "Dia 1","Dia 2","Dia 3","Dia 4","Dia 5","Dia 6","Dia 7",
+           ]
+		},
+		options:{
+			responsive:true,
+		}
+      };
+
+      var datos6 = {
+			type:"bar",
+			data:{
+				datasets:[{
+					label:'Prefloracion',
+					data:[1,2,3,4,5],
+				backgroundColor: arrayColor,
+             borderColor: arrayBorderColor,
+            borderWidth: 1
+		}],	
+
+           labels:[
+          		 "Dia 1","Dia 2","Dia 3","Dia 4","Dia 5","Dia 6","Dia 7","Dia 8","Dia 9",
+           ]
+		},
+		options:{
+			responsive:true,
+		}
+      };
+
+      var datos7 = {
+			type:"bar",
+			data:{
+				datasets:[{
+					label:'Floracion',
+					data:[1,2,3,4,5],
+				backgroundColor: arrayColor,
+             borderColor: arrayBorderColor,
+            borderWidth: 1
+		}],	
+
+           labels:[
+          		 "Dia 1","Dia 2","Dia 3","Dia 4",
+           ]
+		},
+		options:{
+			responsive:true,
+		}
+      };
+
+      	var canvas = document.getElementById("chart").getContext("2d");
+        window.bar = new Chart(canvas,datos);
+
+        var canvas2 = document.getElementById("chart2").getContext("2d");
+        window.bar2 = new Chart(canvas2,datos2);
+
+        var canvas3 = document.getElementById("chart3").getContext("2d");
+        window.bar3 = new Chart(canvas3,datos3);
+
+        var canvas4 = document.getElementById("chart4").getContext("2d");
+        window.bar4 = new Chart(canvas4,datos4);
+
+        var canvas5 = document.getElementById("chart5").getContext("2d");
+        window.bar5 = new Chart(canvas5,datos5);
+
+        var canvas6 = document.getElementById("chart6").getContext("2d");
+        window.bar6 = new Chart(canvas6,datos6);
+
+        var canvas7 = document.getElementById("chart7").getContext("2d");
+        window.bar7 = new Chart(canvas7,datos7);
+
+	});
+ 
 </script>
 
 </head>
@@ -96,132 +238,49 @@
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart" width="300" height="150"></canvas>
    </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
  {% endif %}
  {% if simula.faseCultivo.mergencia %}
-   <script type="text/javascript">
-   $(document).ready(function(){
-		var datos = {
-			type:"line",
-			data:{
-				datasets:[{
-					label: '# of Votes',
-					data:[
-					  8,6,7,8,9,
-					],
-				backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)',
-            ],
-             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-		}],	
-           labels:[
-          		 "Germinacion",
-           		 "Emergencia",
-           		 "Primera Hoja",
-           ]
-		},
-		options:{
-			responsive:true,
-
-		}
-            
-      };
-    
-      var canvas = document.getElementById("chart2").getContext('2d');
-      window.line = new Chart(canvas,datos);
-	});
-   </script>
    <h1 id="titulo" style="text-align: center"><strong id="titulo">Emergencia</strong></h1>
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart2" width="300" height="150"></canvas>
    </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
  {% endif %}
  {% if simula.faseCultivo.hojaPrimaria %}
   <h1 id="titulo" style="text-align: center"><strong id="titulo">Hoja Primaria</strong></h1>
-   <script type="text/javascript">
-   $(document).ready(function(){
-		var datos = {
-			type:"line",
-			data:{
-				datasets:[{
-					label: '# of Votes',
-					data:[
-					  10,11,16,17,9,
-					],
-				backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)',
-            ],
-             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-		}],	
-           labels:[
-          		 "Hoja primaria",
-           		 "Prueba",
-           		 "Primera Hoja",
-           ]
-		},
-		options:{
-			responsive:true,
-
-		}
-            
-      };
-    
-      var canvas = document.getElementById("chart").getContext('2d');
-      window.line = new Chart(canvas,datos);
-	});
-   </script>
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart3" width="300" height="150"></canvas>
    </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
  {% endif %}
  {% if simula.faseCultivo.primeraHoja %}
   <h1 id="titulo" style="text-align: center"><strong id="titulo">Primera Hoja </strong></h1>
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart4" width="300" height="150"></canvas>
    </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
  {% endif %}
  {% if simula.faseCultivo.terceraHoja %}
   <h1 id="titulo" style="text-align: center"><strong id="titulo">Tercera Hoja</strong></h1>
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart5" width="300" height="150"></canvas>
    </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
  {% endif %}
  {% if simula.faseCultivo.prefloracion %}
   <h1 id="titulo" style="text-align: center"><strong id="titulo">Prefloracion</strong></h1>
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart6" width="300" height="150"></canvas>
    </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
  {% endif %}
  {% if simula.faseCultivo.floracion %}
   <h1 id="titulo" style="text-align: center"><strong id="titulo">Floracion</strong></h1>
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart7" width="300" height="150"></canvas>
    </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
  {% endif %}
 </br>
 {% for b in tiempo %}
@@ -236,9 +295,6 @@
  {% endif %}
 
 {% endfor %}
-
-
-
 
 </body>
 </html>

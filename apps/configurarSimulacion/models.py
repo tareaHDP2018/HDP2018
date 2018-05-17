@@ -10,6 +10,8 @@ class Usuario(models.Model):
 	password = models.CharField(max_length=256)
 	fechaNacimiento = models.DateField()
 	sexo = models.CharField(max_length=9)
+	def __str__(self):
+		return self.nombre_usuario
 
 class Siembra(models.Model):
     nombre = models.CharField(max_length=50)

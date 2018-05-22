@@ -1,6 +1,6 @@
 {% extends 'base/base.html'%}
 {% load staticfiles %}
-{% block title%}Nuevo {% endblock %}
+{% block title%}Editar {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static "css/nuevo.css" %}"/>
@@ -11,11 +11,11 @@
 	<div class="form-group ">
 		<div class="form-group">
 			<p><strong>Nombre Simulacion:</strong></p>
-			<input type="text" name="simulacion"  class="form-control" id="nombreSimulacion" onkeypress="" />
+			<input type="text" name="simulacion"  class="form-control" id="nombreSimulacion" value="{{simula.nombre}}" />
 		</div>
 		<div class="col-xs-2">
 			<label for="ex1"><strong>Lineas de siembra:</strong></label>
-			<input type="number" name="linea" id="ex1" class="form-control" id="lineaSiembra" placeholder="Maximo 99 lineas" />
+			<input type="number" name="linea" id="ex1" class="form-control" id="lineaSiembra" placeholder="Maximo 99 lineas" value="{{simula.lineaSiembra}}" />
 		</div>
 		</br>
 		<div class="form-group">
@@ -25,42 +25,32 @@
 		<div class="form-group">
 			<strong>Fases de cultivo</strong>
 		</br>
-		<!--	{% if fase %}
-			{% for fases in fase %}
-			<input type="checkbox"  name="fase" id="fase" />
-			<label class="checkbox">{{fases.descripcion}}</label>
-	        </br>
-			{% endfor %}
-			{% else %}
-			<h1>No hay etapas que simular</h1>
-			{% endif %}
-			{{ form.as_table }}-->
 			<div>
-			<input type="checkbox"  name="germinacion" id="germinacion"  />
+			<input type="checkbox"  name="germinacion" id="germinacion" checked="{{simula.faseCultivo.germinacion}}"  />
 			<strong>Germinacion</strong>
 			</div>
 			<div>
-			<input type="checkbox"  name="emergencia" id="emergencia"  />
+			<input type="checkbox"  name="emergencia" id="emergencia" checked="{{simula.faseCultivo.emergencia}}" />
 			<strong>Emergencia</strong>
 			</div>
 			<div>
-			<input type="checkbox"  name="hojaPrimaria" id="hojaPrimaria"  />
+			<input type="checkbox"  name="hojaPrimaria" id="hojaPrimaria" checked="{{simula.faseCultivo.hojaPrimaria}}" />
 			<strong>Hojas Primarias</strong>
 			</div>
 			<div>
-			<input type="checkbox"  name="primeraHoja" id="primeraHoja"  />
+			<input type="checkbox"  name="primeraHoja" id="primeraHoja" checked="{{simula.faseCultivo.primeraHoja}}" />
 			<strong>Primera Hoja Trifoliada</strong>
 			</div>
 			<div>
-			<input type="checkbox"  name="terceraHoja" id="terceraHoja"  />
+			<input type="checkbox"  name="terceraHoja" id="terceraHoja" checked="{{simula.faseCultivo.terceraHoja}}" />
 			<strong>Tercera Hoja Trifoliada</strong>
 			</div>
 			<div>
-			<input type="checkbox"  name="prefloracion" id="prefloracion"  />
+			<input type="checkbox"  name="prefloracion" id="prefloracion" checked="{{simula.faseCultivo.prefloracion}}" />
 			<strong>Prefloracion</strong>
 			</div>
 			<div>
-			<input type="checkbox"  name="floracion" id="floracion"  />
+			<input type="checkbox"  name="floracion" id="floracion" checked="{{simula.faseCultivo.floracion}}"  />
 			<strong>Floracion</strong>
 			</div>
 			<a href="javascript:seleccionar_todo()"><strong>Marcar todos</strong></a> | 
@@ -69,14 +59,10 @@
 		    
 		</div>
 	</div>
-<!--	<div class="botones">
-        <button type="submit" class="btn btn-primary ">Guardar y Simular</button>
-        <a class="btn btn-danger " href="">Cancelar</a>
-    </div>-->
     <div class="container">
     	<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">Configuracion</button>
 		<button type="submit" class="btn btn-primary ">Guardar</button>
-        <a class="btn btn-danger " href="{% url 'nuevo:inicio' %}">Cancelar</a>
+        <a class="btn btn-danger " href="{% url 'consulta:consultar' %}">Cancelar</a>
     </div>
 	<div class="container">
 		
@@ -89,26 +75,25 @@
            </div>
            <div class="modal-body">
            	{% csrf_token %}
-         <!-- 	{{ form2.as_p}}-->
               <label>Temperatura Maxima</label>
-              <input type="number" name="temperaturaMax" id="temperaturaMax" value="25" placeholder=" Maximo 45 Centigrados" class="form-control"/>
+              <input type="number" name="temperaturaMax" id="temperaturaMax" value="{{simula.configuracion.temperaturaMax}}" placeholder=" Maximo 45 Centigrados" class="form-control"/>
               <label>Temperatura Minima</label>
-              <input type="number" name="temperaturaMin" id="temperaturaMin" value="10" placeholder="Minimo 5 Centigrados" class="form-control"/>
+              <input type="number" name="temperaturaMin" id="temperaturaMin" value="{{simula.configuracion.temperaturaMin]}}" placeholder="Minimo 5 Centigrados" class="form-control"/>
               <div class="form-group">
               <label>Humedad</label>
-              <input type="number" name="humedad" id="humedad" value="10" placeholder="milimetros lluvia" class="form-control"/>
+              <input type="number" name="humedad" id="humedad" value="{{simula.configuracion.humedad}}" placeholder="milimetros lluvia" class="form-control"/>
               </div>
               <div class="form-group">
               <label>Altitud</label>
-              <input type="number" name="altitud" id="altitud" value="10" placeholder="msnm" class="form-control"/>
+              <input type="number" name="altitud" id="altitud" value="{{simula.configuracion.altitud}}" placeholder="msnm" class="form-control"/>
               </div>
               <div class="form-group">
               <label>Luminosidad</label>
-              <input type="number" name="luminosidad" id="luminosidad" value="10" placeholder="" class="form-control"/>
+              <input type="number" name="luminosidad" id="luminosidad" value="{{simula.configuracion.luminosidad}}" placeholder="" class="form-control"/>
               </div>
               <div class="form-group">
               <label>Distancia entre Linea</label>
-              <input type="number" name="distanciaL" id="distanciaL" value="10" placeholder="centimetros" class="form-control"/>
+              <input type="number" name="distanciaL" id="distanciaL" value="{{simula.configuracion.distanciaLinea}}" placeholder="centimetros" class="form-control"/>
               </div>
            </div>
            <div class="modal-footer">

@@ -8,40 +8,34 @@
 	<script  type="application/javascript" src="/static/js/jquery2.min.js"  ></script>
 	<link rel="stylesheet" type="text/css" href="{% static "css/estilo2.css" %}">
 	<script type="text/javascript">
-	
-	var nodos = unescape({{nodos|safe|escapejs}});
-	var json_data = JSON.parse(nodos);
-	console.log(json_data);
-	
-	var simula = "{{simula|safe}}";
-	var tiempo = "{{tiempo|safe}}";
-	var hFase = "{{hidrico|safe}}";
-	var humedad = "{{humedad|safe}}";
-	var i = 7;
-	var datos2 = [];
-	var arrayColor = [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)',
-            ];
-     var arrayBorderColor = [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-            ];
+	var prueba = [1,2,3,4,5,6];
+	var nodos = parseInt("{{nodos|safe}}");
+	console.log(nodos);
+	//var json_data = JSON.parse(nodos);
+	//console.log(json_data);
+	//var nodos = "{{nodos|safe}}";
+	//var nuNodos = parseFloat(nodos);
+	//console.log(nodos[0]);
+	//var simula = "{{simula|safe}}";
+	//console.log(simula);
+	var validar = "{{validar|safe}}";
+	//console.log(validar);
+	//var tiempo = "{{tiempo|safe}}";
+	//var hFase = "{{hidrico|safe}}";
+	//var humedad = "{{humedad|safe}}";
+	var arrayColor = ['rgba(255, 99, 132, 0.5)','rgba(54, 162, 235, 0.5)','rgba(255, 206, 86, 0.5)','rgba(75, 192, 192, 0.5)','rgba(153, 102, 255, 0.5)','rgba(255, 159, 64, 0.5)',];
+     var arrayBorderColor = ['rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)',];
+
 		$(document).ready(function(){
-		var datos = {
+	var datos = {
 			type:"bar",
 			data:{
 				datasets:[{
 					label:'Germinacion',
-					data:[1,2,3,4,5],
+					data:[ {% for nodo in nodos%}
+					{{nodo}}
+					{% endfor %}
+					],
 				backgroundColor: arrayColor,
              borderColor: arrayBorderColor,
             borderWidth: 1
@@ -55,8 +49,8 @@
 			responsive:true,
 		}
       };
-
-      var datos2 = {
+     
+     var datos2 = {
 			type:"bar",
 			data:{
 				datasets:[{
@@ -175,55 +169,44 @@
 			responsive:true,
 		}
       };
-
+        
+        if(validar[1]==1){
       	var canvas = document.getElementById("chart").getContext("2d");
         window.bar = new Chart(canvas,datos);
-
+        }
+        if(validar[4]==1){
         var canvas2 = document.getElementById("chart2").getContext("2d");
         window.bar2 = new Chart(canvas2,datos2);
-
+        }
+      	if(validar[7]==1){
         var canvas3 = document.getElementById("chart3").getContext("2d");
         window.bar3 = new Chart(canvas3,datos3);
-
+		}
+		if(validar[10]==1){
         var canvas4 = document.getElementById("chart4").getContext("2d");
         window.bar4 = new Chart(canvas4,datos4);
-
+		}
+		if(validar[13]==1){
         var canvas5 = document.getElementById("chart5").getContext("2d");
         window.bar5 = new Chart(canvas5,datos5);
-
+        }
+        if(validar[16]==1){
         var canvas6 = document.getElementById("chart6").getContext("2d");
         window.bar6 = new Chart(canvas6,datos6);
-
+        }
+        if(validar[19]==1){
         var canvas7 = document.getElementById("chart7").getContext("2d");
         window.bar7 = new Chart(canvas7,datos7);
-
+        }
 	});
  
 </script>
 
 </head>
 <body>
-	<div class="container">
-		<header>
-			<nav class="navegacion">
-      			<ul class="menu">
-      				<li><a href="">Inicio</a></li>
-      				<li><a href="">SimulaFri</a></li>
-      				<li><a href="">Mis simulaciones</a></li>
-      				<li><a href="">Opciones</a>
-						<ul class="submenu">
-							<li><a href="{% url 'login_registrar:lo' %}">Salir</a></li>
-						</ul>
-      				</li>
-      				<li>
-      			</li>
-
-      			</ul>
-      		</nav>
-		</header>
-		
-	</div>
-
+	
+	{% include 'base/menu.html' %}
+	<h1 style="text-align: center"><strong>{{ simula.nombre }}</strong></h1>
 <style type="text/css">
 	#canvas-container{
 		margin:30px auto;
@@ -235,6 +218,8 @@
 
  {% if simula.faseCultivo.germinacion  %}
    <h1 id="titulo" style="text-align: center"><strong> Germinacion</strong></h1>
+  
+ 
    <div id="canvas-container"  style="width:50%;">
 		<canvas id="chart" width="300" height="150"></canvas>
    </div>

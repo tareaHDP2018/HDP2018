@@ -1,10 +1,12 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,render_to_response,get_object_or_404
 from apps.nuevo_editar.forms import SimulacionForm, ConfigurarForm
 from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,FaseCultivo,Usuario
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.core.urlresolvers import reverse_lazy
 from decimal import *
-from django.views.generic import ListView,CreateView,DeleteView,UpdateView,View
+from django.views.generic import ListView,CreateView,DeleteView,UpdateView,View,TemplateView
+import json as simplejson
+import json
 
 
 
@@ -53,6 +55,45 @@ def simulacionCrear(request):
 	contexto = {'siembras':siembras}
 	return render(request,'Simulacion/nuevo.html',contexto)
 
+def simulacionEditar(request,idSimulacion):
+	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
+	if request.method == 'POST':
+		simula = Simulacion()
+		confi = Configuracion()
+		fase = FaseCultivo()
+		fase.germinacion=True if request.POST.get('germinacion') else False
+		fase.mergencia=True if request.POST.get('emergencia') else False
+		fase.hojaPrimaria=True if request.POST.get('hojaPrimaria') else False
+		fase.primeraHoja=True if request.POST.get('primeraHoja') else False
+		fase.terceraHoja=True if request.POST.get('terceraHoja') else False
+		fase.prefloracion=True if request.POST.get('prefloracion') else False
+		fase.floracion=True if request.POST.get('floracion') else False
+		fase.save()
+		fase_id = FaseCultivo.objects.latest('id')
+		
+		confi.temperaturaMax = request.POST['temperaturaMax']
+		confi.temperaturaMin = request.POST['temperaturaMin']
+		confi.humedad = request.POST['humedad']
+		confi.altitud = request.POST['altitud']
+		confi.luminosidad = request.POST['luminosidad']
+		confi.distanciaLinea = request.POST['distanciaL']
+		confi.save()
+		confi_id = Configuracion.objects.latest('id')
+
+		simula.nombre = request.POST['simulacion']
+		simula.lineaSiembra = request.POST['linea']
+		simula.estado = 1
+		simula.siembra = siembras
+		simula.usuario = usuario_id
+		simula.configuracion=confi_id
+		simula.faseCultivo = fase_id
+		simula.save()
+
+		return redirect('consulta:consultar')
+	else:
+		contexto = {'simula':simulacion}
+		return render_to_response('Simulacion/editarSimulacion.html',contexto)
+
 def simular(request):
 	simula = Simulacion.objects.filter(usuario_id=1).latest('id')
 	contexto = {'simula':simula}
@@ -80,6 +121,7 @@ def grafico(request,idSimulacion):
 	tiempo = tiempoDia(simula)
 	hFase = hidricoFase(simula)
 	contador = len(tiempo)
+	validar2 = validar(simula)
 	tiempo2=[]
 	for a in tiempo:
 		tiempo2.append(float(a))
@@ -91,12 +133,28 @@ def grafico(request,idSimulacion):
 			N.append(0)
 		else:
 			getcontext().prec = 4
-			N.append(str(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)))
+			N.append(float(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)))
 
 	numero = len(N)
-	 
+	
+	nodos2 = simplejson.dumps(N)
 
-	return render(request,'Simulacion/grafico.html',{'nodos':N,'simula':simula,'tiempo':tiempo2,'hidrico':hFase,'humedad':humedad,'numero':numero})
+
+	return render_to_response('Simulacion/grafico.html',{'nodos':nodos2,'simula':simula,'tiempo':tiempo2,'hidrico':hFase,'humedad':humedad,'numero':numero,'validar':validar2})
+
+"""class ajaxConsultarGrafico(TemplateView):
+	simula = Simulacion.objects.get(id=idSimulacion)
+	def get(self,request,*args,**kwargs):
+		validar2 = validar(simula)
+		data = {'vali':validar2}
+		return render_to_response(json.dumps(data))"""
+
+"""def consultaGrafico(request):
+	simula = Simulacion.objects.get(id=reques.GET['idForm'])
+	validar2 = validar(simula)
+	data = {'vali':validar2}
+	return JsonResponse(data)"""
+
 
 
 def tiempoDia(simulacion2):
@@ -162,4 +220,38 @@ def hidricoFase(simulacion):
 	else:
 		t.append(0)
 	return t
+
+def validar(simulacion2):
+	t =[]
+	if simulacion2.faseCultivo.germinacion:
+		t.append(1)
+	else:
+		t.append(0)
+	if simulacion2.faseCultivo.mergencia:
+		t.append(1)
+	else:
+		t.append(0)
+	if simulacion2.faseCultivo.hojaPrimaria:
+		t.append(1)
+	else:
+		t.append(0)
+	if simulacion2.faseCultivo.primeraHoja:
+		t.append(1)
+	else:
+		t.append(0)
+	if simulacion2.faseCultivo.terceraHoja:
+		t.append(1)
+	else:
+		t.append(0)
+	if simulacion2.faseCultivo.prefloracion:
+		t.append(1)
+	else:
+		t.append(0)
+	if simulacion2.faseCultivo.floracion:
+		t.append(1)
+	else:
+		t.append(0)
+	return t 
+
+
 

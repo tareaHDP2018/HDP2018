@@ -8,25 +8,23 @@
 		<tr>
 			<td>Nombre</td>
 			<td>Linea de siembra</td>
-			<td>Estado</td>
-			<td>Configuracion</td>
 			<td>Siembra</td>
-			<td>Fase del cultivo</td>
+			<td>Acciones</td>
 		</tr>
 	</thead>
 
 	<tbody>
 		{% if simulaciones %}
-		{% for simulacion  in simulaciones.all %}
-		<tr>
-		<td>{{ simulacion.nombre }}</td>
-		<td>{{ simulacion.lineaSiembra }}</td>
-		<td>{{ simulacion.estado }}</td>
-		<td>{{ simulacion.configuracion.distanciaLinea }}</td>
-		<td>{{ simulacion.siembra.nombre }}</td>
-		<td>{{ simulacion.faseCultivo.etapa }}</td>
-		<td>{{ simulacion.usuario.nombre }} {{ simulacion.usuario.apellido }}</td>
-		</tr>
+			{% for simulacion  in simulaciones.all %}
+			<tr>
+				<td>{{ simulacion.nombre }}</td>
+				<td>{{ simulacion.lineaSiembra }}</td>
+				<td>{{ simulacion.siembra.nombre }}</td>
+				<td>
+					<a class="btn btn-primary" href="{% url 'consulta:editar' simulacion.id}%">Editar</a>
+					<a class="btn btn-danger" href="{% url 'consulta:eliminar' simulacion.id}%">Eliminar</a>
+				</td>
+			</tr>
 
 		{% endfor %} 
 

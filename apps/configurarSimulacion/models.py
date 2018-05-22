@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Usuario(models.Model):
-	nombre = models.CharField(max_length=50)
-	apellido = models.CharField(max_length=50)
 	nombre_usuario = models.CharField(max_length=50)
 	password = models.CharField(max_length=256)
+	nombre = models.CharField(max_length=50)
+	apellido = models.CharField(max_length=50)
 	fechaNacimiento = models.DateField()
 	sexo = models.CharField(max_length=9)
 	def __str__(self):

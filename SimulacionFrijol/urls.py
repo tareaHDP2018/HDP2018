@@ -17,7 +17,7 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from apps.login_registrar.views import handler404,handler500
 from django.conf.urls import handler404,handler500
-
+ 
 
 handler404=handler404 
 handler500=handler500

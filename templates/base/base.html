@@ -15,9 +15,10 @@
       	<header>
       		<nav class="navegacion">
       			<ul class="menu">
-      				<li><a href="">Inicio</a></li>
-      				<li><a href="">SimulaFri</a></li>
-      				<li><a href="">Mis simulaciones</a></li>
+      				<li><a href="{% url 'nuevo:inicio'%}">Inicio</a></li>
+      				<li><a href="{% url 'nuevo:somos' %}">SimulaFri</a></li>
+      				<li><a href="{% url 'nuevo:nuevaSimulacion' %}">Nueva Simulacion</a></li>
+      				<li><a href="{% url 'consulta:consultar'%}">Mis simulaciones</a></li>
       				<li><a href="">Opciones</a>
 						<ul class="submenu">
 							<li><a href="{% url 'login_registrar:lo' %}">Salir</a></li>

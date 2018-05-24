@@ -1,38 +1,59 @@
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404,render_to_response
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
-
-from apps.configurarSimulacion.models import Simulacion
-from apps.configurarSimulacion.forms import ConfigurarForm
+from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,FaseCultivo,Usuario
+#from apps.configurarSimulacion.forms import ConfigurarForm
+ 
 # Create your views here.
 def simulacionlist(request):
-	 simulacion = Simulacion.objects.all()
+	 simulacion = Simulacion.objects.filter(estado=1).filter(usuario=1).order_by('-id')
 	 contexto = {'simulaciones':simulacion }
 	 return render(request, 'Simulacion/consultar.html', contexto)
-# Create your views here.from django.shortcuts import renderfrom django.shortcuts import render
 
-def simulacion_editar(request,id_simulacion):
-	simulacion = Simulacion.objects.get(id=id_simulacion)
-	if request.method== 'GET':
-		form = ConfigurarForm(instance=simulacion)
+@csrf_protect
+def simulacionEditar(request,idSimulacion):
+	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
+	configura = get_object_or_404(Configuracion,pk=idSimulacion)
+	simula2 = Simulacion.objects.get(id=idSimulacion)
+	siembras = Siembra.objects.get(id=1)
+	usuario_id = Usuario.objects.get(id=1)
+	if request.method == 'POST':
+		simula = Simulacion()
+		confi = Configuracion()
+		fase = FaseCultivo()
+		fase.germinacion=True if request.POST.get('germinacion') else False
+		fase.mergencia=True if request.POST.get('emergencia') else False
+		fase.hojaPrimaria=True if request.POST.get('hojaPrimaria') else False
+		fase.primeraHoja=True if request.POST.get('primeraHoja') else False
+		fase.terceraHoja=True if request.POST.get('terceraHoja') else False
+		fase.prefloracion=True if request.POST.get('prefloracion') else False
+		fase.floracion=True if request.POST.get('floracion') else False
+		fase.save()
+		fase_id = FaseCultivo.objects.latest('id')
+		
+		confi.temperaturaMax = request.POST['temperaturaMax']
+		confi.temperaturaMin = request.POST['temperaturaMin']
+		confi.humedad = request.POST['humedad']
+		confi.altitud = request.POST['altitud']
+		confi.luminosidad = request.POST['luminosidad']
+		confi.distanciaLinea = request.POST['distanciaL']
+		confi.save()
+		confi_id = Configuracion.objects.latest('id')
 
+		simula.nombre = request.POST['simulacion']
+		simula.lineaSiembra = request.POST['linea']
+		simula.estado = 1
+		simula.siembra = siembras
+		simula.usuario = usuario_id
+		simula.configuracion=confi_id
+		simula.faseCultivo = fase_id
+		simula.save()
+
+		simula2.delete()
+
+		return redirect('consulta:consultar')
 	else:
-		form = ConfigurarForm(request.POST, instance=simulacion)
-		if form.is_valid():
-			form.save()
-
-		return redirect('consulta:editar')
-
-	return render(request,'Simulacion/nuevo.html',{'form':form})
-# Create your views here.
-
-def simulacion_eliminar(request):
-	simulacion = Simulacion.objects.get()
-	if request.method== 'POST':
-		simulacion.delete()
-
-		return redirect('consulta:editar')
-
-
-	return render(request,'Simulacion/simulaciondelete.html',{'simulacion':simulacion})
-# Create your views here.
+		contexto = {'simula':simulacion,'confi':configura,'siembras':siembras}
+		#contexto.update(csrf(request))
+		return render(request,'Simulacion/editarSimulacion.html',contexto)

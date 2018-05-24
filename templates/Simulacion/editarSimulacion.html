@@ -6,16 +6,17 @@
 <link rel="stylesheet" href="{% static "css/nuevo.css" %}"/>
 <script type="text/javascript" src="/static/js/validarFormNuevo.js"></script>
 <form class="formulario" name="frmDatos" method="POST" onsubmit="return validaDatos()">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	 {% csrf_token %}
    
 	<div class="form-group ">
 		<div class="form-group">
 			<p><strong>Nombre Simulacion:</strong></p>
-			<input type="text" name="simulacion"  class="form-control" id="nombreSimulacion" value="{{simula.nombre}}" />
+			<input type="text" name="simulacion"  class="form-control" id="nombreSimulacion" value="{{simula.nombre}}" required="required" />
 		</div>
 		<div class="col-xs-2">
 			<label for="ex1"><strong>Lineas de siembra:</strong></label>
-			<input type="number" name="linea" id="ex1" class="form-control" id="lineaSiembra" placeholder="Maximo 99 lineas" value="{{simula.lineaSiembra}}" />
+			<input type="number" name="linea" id="ex1" class="form-control" id="lineaSiembra" placeholder="Maximo 99 lineas" value="{{simula.lineaSiembra}}" required="required" min="1" max="99" />
 		</div>
 		</br>
 		<div class="form-group">
@@ -25,38 +26,86 @@
 		<div class="form-group">
 			<strong>Fases de cultivo</strong>
 		</br>
+			{% if simula.faseCultivo.germinacion%}
 			<div>
-			<input type="checkbox"  name="germinacion" id="germinacion" checked="{{simula.faseCultivo.germinacion}}"  />
+			<input type="checkbox"  name="germinacion" id="germinacion" checked=""  />
 			<strong>Germinacion</strong>
 			</div>
+			{% else %}
 			<div>
-			<input type="checkbox"  name="emergencia" id="emergencia" checked="{{simula.faseCultivo.emergencia}}" />
+			<input type="checkbox"  name="germinacion" id="germinacion"   />
+			<strong>Germinacion</strong>
+			</div>
+			{% endif %}
+			{% if simula.faseCultivo.mergencia %}
+			<div>
+			<input type="checkbox"  name="emergencia" id="emergencia" checked="" />
 			<strong>Emergencia</strong>
 			</div>
+			{%else%}
+			<div>
+			<input type="checkbox"  name="emergencia" id="emergencia"  />
+			<strong>Emergencia</strong>
+			</div>
+			{% endif %}
+			{% if simula.faseCultivo.hojaPrimaria %}
 			<div>
 			<input type="checkbox"  name="hojaPrimaria" id="hojaPrimaria" checked="{{simula.faseCultivo.hojaPrimaria}}" />
 			<strong>Hojas Primarias</strong>
 			</div>
+			{% else %}
 			<div>
-			<input type="checkbox"  name="primeraHoja" id="primeraHoja" checked="{{simula.faseCultivo.primeraHoja}}" />
+			<input type="checkbox"  name="hojaPrimaria" id="hojaPrimaria"  />
+			<strong>Hojas Primarias</strong>
+			</div>
+			{% endif %}
+			{% if simula.faseCultivo.primeraHoja %}
+			<div>
+			<input type="checkbox"  name="primeraHoja" id="primeraHoja" checked="" />
+			<strong>Primera Hoja Trifoliada</strong>
+		    </div>
+			{% else %}
+			<div>
+			<input type="checkbox"  name="primeraHoja" id="primeraHoja" />
 			<strong>Primera Hoja Trifoliada</strong>
 			</div>
+			{% endif %}
+			{% if simula.faseCultivo.terceraHoja%}
 			<div>
-			<input type="checkbox"  name="terceraHoja" id="terceraHoja" checked="{{simula.faseCultivo.terceraHoja}}" />
+			<input type="checkbox"  name="terceraHoja" id="terceraHoja" checked="" />
 			<strong>Tercera Hoja Trifoliada</strong>
 			</div>
+			{% else %}
 			<div>
-			<input type="checkbox"  name="prefloracion" id="prefloracion" checked="{{simula.faseCultivo.prefloracion}}" />
+			<input type="checkbox"  name="terceraHoja" id="terceraHoja"  />
+			<strong>Tercera Hoja Trifoliada</strong>
+			</div>
+			{% endif %}
+			{% if simula.faseCultivo.prefloracion%}
+			<div>
+			<input type="checkbox"  name="prefloracion" id="prefloracion" checked="" />
 			<strong>Prefloracion</strong>
 			</div>
+			{% else %}
 			<div>
-			<input type="checkbox"  name="floracion" id="floracion" checked="{{simula.faseCultivo.floracion}}"  />
+			<input type="checkbox"  name="prefloracion" id="prefloracion" />
+			<strong>Prefloracion</strong>
+			</div>
+			{% endif%}
+			{% if simula.faseCultivo.floracion%}
+			<div>
+			<input type="checkbox"  name="floracion" id="floracion" checked=""  />
 			<strong>Floracion</strong>
 			</div>
+			{% else %}
+			<div>
+			<input type="checkbox"  name="floracion" id="floracion"   />
+			<strong>Floracion</strong>
+			</div>
+			{% endif %}
 			<a href="javascript:seleccionar_todo()"><strong>Marcar todos</strong></a> | 
 			<a href="javascript:deseleccionar_todo()"><strong>Desmarcar</strong></a>
 			
-		    
 		</div>
 	</div>
     <div class="container">
@@ -74,31 +123,41 @@
                <h4 class="modal-title">Configuracion Base</h4>
            </div>
            <div class="modal-body">
-           	{% csrf_token %}
+           	  {% csrf_token %}
+           	  <div class="form-group">
               <label>Temperatura Maxima</label>
-              <input type="number" name="temperaturaMax" id="temperaturaMax" value="{{simula.configuracion.temperaturaMax}}" placeholder=" Maximo 45 Centigrados" class="form-control"/>
+              <input type="range" step="0.01" name="temperaturaMax" id="temperaturaMax"  class="form-control" required="required" min="25" max="45" />
+              <input type="text" name="valoredad" id="valoredad" value="{{simula.configuracion.temperaturaMax}}"  disabled="" placeholder=" Maximo 45 Centigrados"  />
+              </div>
+              <div class="form-group">
               <label>Temperatura Minima</label>
-              <input type="number" name="temperaturaMin" id="temperaturaMin" value="{{simula.configuracion.temperaturaMin]}}" placeholder="Minimo 5 Centigrados" class="form-control"/>
+              <input type="range" step="0.01" name="temperaturaMin" id="temperaturaMin"  class="form-control" required="required" min="5" max="20"/>
+              <input type="text" name="valoredad2" id="valoredad2" value="{{simula.configuracion.temperaturaMin}}"  disabled="" placeholder="Minimo 5 Centigrados"  />
+              </div>
               <div class="form-group">
               <label>Humedad</label>
-              <input type="number" name="humedad" id="humedad" value="{{simula.configuracion.humedad}}" placeholder="milimetros lluvia" class="form-control"/>
+              <input type="range" step="0.01" name="humedad" id="humedad"  class="form-control" required="required" min="200" max="1000"/>
+              <input type="text" name="valoredad3" id="valoredad3" value="{{simula.configuracion.humedad}}"  disabled=""  placeholder="milimetros lluvia" />
               </div>
               <div class="form-group">
               <label>Altitud</label>
-              <input type="number" name="altitud" id="altitud" value="{{simula.configuracion.altitud}}" placeholder="msnm" class="form-control"/>
+              <input type="range" step="0.01" name="altitud" id="altitud"   class="form-control" required="required" min="500" max="4500"/>
+              <input type="text" name="valoredad4" id="valoredad4" value="{{simula.configuracion.altitud}}"  disabled="" placeholder="msnm"/>
               </div>
               <div class="form-group">
               <label>Luminosidad</label>
-              <input type="number" name="luminosidad" id="luminosidad" value="{{simula.configuracion.luminosidad}}" placeholder="" class="form-control"/>
+              <input type="range" step="0.01" name="luminosidad" id="luminosidad"   class="form-control" required="required" min="50" max="99"/>
+              <input type="text" name="valoredad5" id="valoredad5" value="{{simula.configuracion.luminosidad}}"  disabled="" />
               </div>
               <div class="form-group">
               <label>Distancia entre Linea</label>
-              <input type="number" name="distanciaL" id="distanciaL" value="{{simula.configuracion.distanciaLinea}}" placeholder="centimetros" class="form-control"/>
+              <input type="range" step="0.01" name="distanciaL" id="distanciaL" class="form-control" required="required" min="10" max="99"/>
+               <input type="text" name="valoredad6" id="valoredad6" value="{{simula.configuracion.distanciaLinea}}"  disabled="" placeholder="centimetros" />
               </div>
            </div>
            <div class="modal-footer">
               <button type="button" class="btn btn-info" data-dismiss="modal" onsubmit="return validaDatos()">OK</button>
-              <input type="reset" class="btn btn-default">
+              <input type="reset" class="btn btn-default" >
            </div>
 
          </div>
@@ -119,6 +178,30 @@ function deseleccionar_todo(){
       if(document.frmDatos.elements[i].type == "checkbox")	
          document.frmDatos.elements[i].checked=0 
 }
+
+$(document).ready(function()
+		{
+		$('#temperaturaMax').change(function() {
+		$('#valoredad').val($(this).val());
+		});
+		$('#temperaturaMin').change(function() {
+		$('#valoredad2').val($(this).val());
+		});
+		$('#humedad').change(function() {
+		$('#valoredad3').val($(this).val());
+		});
+		$('#altitud').change(function() {
+		$('#valoredad4').val($(this).val());
+		});
+		$('#luminosidad').change(function() {
+		$('#valoredad5').val($(this).val());
+		});
+		$('#distanciaL').change(function() {
+		$('#valoredad6').val($(this).val());
+		});
+
+	});
+
 </script>
 
 	

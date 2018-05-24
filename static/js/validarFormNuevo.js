@@ -29,8 +29,17 @@ function validaDatos() {
 	}
 
 	if(temperaturaMax.value > 45){
-		alert("Ingrese un valor maximo de 2 cifras");
+		alert("Ingrese un valor maximo de 45 grados centigrados");
 		return false;
+	}
+	if(temperaturaMax.value < 25){
+		alert("Ingrese un valor minimo de 25 grados centigrados")
+	}
+	for (i = 0;i< temperaturaMax.value.length; i++ ){
+		if(isNaN(parseInt(temperaturaMax.value.charAt(i)))==true){
+			alert("Solamente se permiten numeros en temperaturaMax");
+			return false;
+		}
 	}
 
 	if(temperaturaMin.value == ""){

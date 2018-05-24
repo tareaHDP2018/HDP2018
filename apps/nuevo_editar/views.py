@@ -16,6 +16,10 @@ def index(request):
 			#return redirect('/')
 	return render(request,'Simulacion/index.html')
 
+def somos(request):
+
+	return render_to_response('Simulacion/quienSomos.html')
+
 def simulacionCrear(request):
 	siembras = Siembra.objects.get(id=1)
 	usuario_id = Usuario.objects.get(id=1)
@@ -55,44 +59,6 @@ def simulacionCrear(request):
 	contexto = {'siembras':siembras}
 	return render(request,'Simulacion/nuevo.html',contexto)
 
-def simulacionEditar(request,idSimulacion):
-	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
-	if request.method == 'POST':
-		simula = Simulacion()
-		confi = Configuracion()
-		fase = FaseCultivo()
-		fase.germinacion=True if request.POST.get('germinacion') else False
-		fase.mergencia=True if request.POST.get('emergencia') else False
-		fase.hojaPrimaria=True if request.POST.get('hojaPrimaria') else False
-		fase.primeraHoja=True if request.POST.get('primeraHoja') else False
-		fase.terceraHoja=True if request.POST.get('terceraHoja') else False
-		fase.prefloracion=True if request.POST.get('prefloracion') else False
-		fase.floracion=True if request.POST.get('floracion') else False
-		fase.save()
-		fase_id = FaseCultivo.objects.latest('id')
-		
-		confi.temperaturaMax = request.POST['temperaturaMax']
-		confi.temperaturaMin = request.POST['temperaturaMin']
-		confi.humedad = request.POST['humedad']
-		confi.altitud = request.POST['altitud']
-		confi.luminosidad = request.POST['luminosidad']
-		confi.distanciaLinea = request.POST['distanciaL']
-		confi.save()
-		confi_id = Configuracion.objects.latest('id')
-
-		simula.nombre = request.POST['simulacion']
-		simula.lineaSiembra = request.POST['linea']
-		simula.estado = 1
-		simula.siembra = siembras
-		simula.usuario = usuario_id
-		simula.configuracion=confi_id
-		simula.faseCultivo = fase_id
-		simula.save()
-
-		return redirect('consulta:consultar')
-	else:
-		contexto = {'simula':simulacion}
-		return render_to_response('Simulacion/editarSimulacion.html',contexto)
 
 def simular(request):
 	simula = Simulacion.objects.filter(usuario_id=1).latest('id')
@@ -115,8 +81,10 @@ def grafico(request,idSimulacion):
 		rT = 0.75
 	elif tMaxima <= 35:
 		rT = 1
+	elif tMaxima <= 45:
+		rT=1
 	elif tMaxima <= 50:
-		rT=0
+		rt=0
 
 	tiempo = tiempoDia(simula)
 	hFase = hidricoFase(simula)
@@ -132,7 +100,7 @@ def grafico(request,idSimulacion):
 		if t == 0:
 			N.append(0)
 		else:
-			getcontext().prec = 4
+			getcontext().prec = 2
 			N.append(float(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)))
 
 	numero = len(N)

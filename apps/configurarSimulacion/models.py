@@ -40,9 +40,9 @@ class Simulacion(models.Model):
 	nombre = models.CharField(max_length=50)
 	lineaSiembra = models.IntegerField()
 	estado = models.IntegerField()
-	configuracion = models.OneToOneField(Configuracion, blank=False)
-	siembra = models.ForeignKey(Siembra, null=True, blank=False)
-	faseCultivo =models.ForeignKey(FaseCultivo,blank=True)
+	configuracion = models.OneToOneField(Configuracion, blank=False,on_delete=models.CASCADE)
+	siembra = models.ForeignKey(Siembra, null=True, blank=False,on_delete=models.CASCADE)
+	faseCultivo =models.ForeignKey(FaseCultivo,blank=True,on_delete=models.CASCADE)
 	usuario = models.ForeignKey(Usuario,null=True,blank=False)
 	def __str__(self):
 		return self.nombre  

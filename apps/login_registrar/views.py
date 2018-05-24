@@ -42,9 +42,9 @@ def registrar(request):
     error=''
     if request.method=='POST':
         form = RegistrarForm(request.POST)
-        nom=request.POST.get('nombre de usuario',None)
-        us=Usuario.objects.filter(nombre_usuario=nom).exists()
-        if us==False and form.is_valid(): 
+        nom=request.POST.get('nombre_usuario',None)
+                
+        if User.objects.filter(username=nom).exists()==False and form.is_valid(): 
             usuario=form.save()
             usuario.save()
             user=User.objects.create_user(username=usuario.nombre_usuario,password=usuario.password)

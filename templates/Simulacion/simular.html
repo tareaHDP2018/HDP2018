@@ -3,6 +3,10 @@
 {% block title%}Simular{% endblock %}
 
 {% block content %}
+<script type="application/javascript" src="/static/js/Chart.bundle.js"></script>
+<script type="application/javascript" src="/static/js/jquery-1.12.0.min.js" ></script>
+<script  type="application/javascript" src="/static/js/jquery2.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 <table class="table table-bordered">
 	<thead>
@@ -82,8 +86,84 @@
 	</tbody>
 	
 </table>
+<form method="GET" action="{% url 'nuevo:ajaxConsulta'%}" id="grafico">
 <div>
-		<a class = "btn btn-primary" href="{% url 'nuevo:graficos' simula.id %}">Simular</a>
+		<input type="text" name="grafico" value="{{simula.id}}">
+		<input class="btn btn-primary" type="submit" name="grafico" value="Simular">
+		
 	</div>
+</form>
+<script type="text/javascript" src="/static/js/grafico.js"></script>
+<style type="text/css">
+	#canvas-container{
+		margin:30px auto;
+	}
+	#titulo{
+	margin: 30px auto;
+	}
+</style>
+  {% if simula.faseCultivo.germinacion  %}
+   <h1 id="titulo" style="text-align: center"><strong> Germinacion</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+ {% endif %}
+ {% if simula.faseCultivo.mergencia %}
+   <h1 id="titulo" style="text-align: center"><strong id="titulo">Emergencia</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart2" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+ {% endif %}
+ {% if simula.faseCultivo.hojaPrimaria %}
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Hoja Primaria</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart3" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+ {% endif %}
+ {% if simula.faseCultivo.primeraHoja %}
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Primera Hoja </strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart4" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+ {% endif %}
+ {% if simula.faseCultivo.terceraHoja %}
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Tercera Hoja</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart5" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+ {% endif %}
+ {% if simula.faseCultivo.prefloracion %}
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Prefloracion</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart6" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+ {% endif %}
+ {% if simula.faseCultivo.floracion %}
+  <h1 id="titulo" style="text-align: center"><strong id="titulo">Floracion</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart7" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+ {% endif %}
+ <div class="form-group">
+ <h1 id="titulo" style="text-align: center"><strong id="titulo">Simulacion General</strong></h1>
+   <div id="canvas-container"  style="width:50%;">
+		<canvas id="chart8" width="300" height="150"></canvas>
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias</strong></h4>
+</div>
+
+
+   <h1 id="titulo" style="text-align: center"><strong id="titulo">Hidricos</strong></h1>
+   <div id="canvas-container"  style="width:70%;">
+		<canvas id="myChart"></canvas
+   </div>
+   <h4 id="titulo" style="text-align: center"><strong> Dias del cultivo</strong></h4>
 
 {% endblock %}

@@ -6,23 +6,25 @@
 	<script type="application/javascript" src="/static/js/Chart.bundle.js"></script>
 	<script type="application/javascript" src="/static/js/jquery-1.12.0.min.js" ></script>
 	<script  type="application/javascript" src="/static/js/jquery2.min.js"  ></script>
+
+
 	<link rel="stylesheet" type="text/css" href="{% static "css/estilo2.css" %}">
+
 	<script type="text/javascript">
-	var prueba = [1,2,3,4,5,6];
-	var nodos = parseInt("{{nodos|safe}}");
-	console.log(nodos);
-	//var json_data = JSON.parse(nodos);
-	//console.log(json_data);
-	//var nodos = "{{nodos|safe}}";
-	//var nuNodos = parseFloat(nodos);
-	//console.log(nodos[0]);
-	//var simula = "{{simula|safe}}";
-	//console.log(simula);
+
+	var endpoint = '{% url 'nuevo:ajaxConsulta' %}';
+	$.ajax({
+		method:"GET",
+		url:endpoint,
+		success: function(data){
+			console.log(data);
+
+		},
+	})
+	var humedad = "{{humedad|safe}}"
+	var nodos = "{{nodos|safe}}";
+	//console.log(nodos);
 	var validar = "{{validar|safe}}";
-	//console.log(validar);
-	//var tiempo = "{{tiempo|safe}}";
-	//var hFase = "{{hidrico|safe}}";
-	//var humedad = "{{humedad|safe}}";
 	var arrayColor = ['rgba(255, 99, 132, 0.5)','rgba(54, 162, 235, 0.5)','rgba(255, 206, 86, 0.5)','rgba(75, 192, 192, 0.5)','rgba(153, 102, 255, 0.5)','rgba(255, 159, 64, 0.5)',];
      var arrayBorderColor = ['rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)',];
 

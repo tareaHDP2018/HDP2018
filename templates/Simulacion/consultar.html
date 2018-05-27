@@ -22,7 +22,7 @@
 				<td>
 					<a class="btn btn-primary" href="{% url 'consulta:editar' simulacion.id %}">Editar</a>
 					<a  class="btn btn-info" href="{% url 'nuevo:graficos' simulacion.id %}">Ver</a>
-					<a class="btn btn-danger" href="">Eliminar</a>
+					<a class="btn btn-danger" href="{%url 'consulta:eliminar' simulacion.id %}">Eliminar</a>
 				</td>
 			</tr>
 

@@ -7,17 +7,21 @@ from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,Fa
  
 # Create your views here.
 def simulacionlist(request):
-	 simulacion = Simulacion.objects.filter(estado=1).filter(usuario=1).order_by('-id')
+	 us=request.user
+	 usua=Usuario.objects.get(nombre_usuario=us)
+	 simulacion = Simulacion.objects.filter(estado=1).filter(usuario=usua.id).order_by('-id')
 	 contexto = {'simulaciones':simulacion }
 	 return render(request, 'Simulacion/consultar.html', contexto)
 
 @csrf_protect
 def simulacionEditar(request,idSimulacion):
+	us=request.user
+	usua=Usuario.objects.get(nombre_usuario=us)
 	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
 	configura = get_object_or_404(Configuracion,pk=idSimulacion)
-	simula2 = Simulacion.objects.get(id=idSimulacion)
+	
 	siembras = Siembra.objects.get(id=1)
-	usuario_id = Usuario.objects.get(id=1)
+	usuario_id =usua.id
 	if request.method == 'POST':
 		simula = Simulacion()
 		confi = Configuracion()
@@ -40,7 +44,6 @@ def simulacionEditar(request,idSimulacion):
 		confi.distanciaLinea = request.POST['distanciaL']
 		confi.save()
 		confi_id = Configuracion.objects.latest('id')
-
 		simula.nombre = request.POST['simulacion']
 		simula.lineaSiembra = request.POST['linea']
 		simula.estado = 1
@@ -50,10 +53,22 @@ def simulacionEditar(request,idSimulacion):
 		simula.faseCultivo = fase_id
 		simula.save()
 
-		simula2.delete()
+		
 
 		return redirect('consulta:consultar')
 	else:
 		contexto = {'simula':simulacion,'confi':configura,'siembras':siembras}
 		#contexto.update(csrf(request))
 		return render(request,'Simulacion/editarSimulacion.html',contexto)
+
+def simulacionEliminar(request,idSimulacion):
+	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
+	configura = get_object_or_404(Configuracion,pk=idSimulacion)
+	simula2 = Simulacion.objects.get(id=idSimulacion)
+	simula2 = Simulacion.objects.get(id=idSimulacion)
+	nombre=simulacion.nombre
+	if request.method == 'POST':
+		simula2.delete()
+		return redirect('consulta:consultar')
+	else:
+		return render(request,'Simulacion/simulaciondelete.html',context={'nombre':nombre})

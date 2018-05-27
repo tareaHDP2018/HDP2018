@@ -21,8 +21,9 @@ def somos(request):
 	return render_to_response('Simulacion/quienSomos.html')
 
 def simulacionCrear(request):
+	us=request.user
 	siembras = Siembra.objects.get(id=1)
-	usuario_id = Usuario.objects.get(id=1)
+	usuario_id = Usuario.objects.get(nombre_usuario=us)
 	forms = SimulacionForm
 	if request.method == 'POST':
 		simula = Simulacion()

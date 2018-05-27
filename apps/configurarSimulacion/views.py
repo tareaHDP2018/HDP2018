@@ -10,6 +10,7 @@ def index(request):
 	return render(request,'Simulacion/index.html')
 
 def nuevo(request):
+	 
 	#if not request.user.is_active:
 	#		return redirect('/')
 	return render(request,'Simulacion/nuevo.html')

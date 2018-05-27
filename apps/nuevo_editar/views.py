@@ -7,6 +7,8 @@ from decimal import *
 from django.views.generic import ListView,CreateView,DeleteView,UpdateView,View,TemplateView
 import json as simplejson
 import json
+from django.forms.models import model_to_dict
+from django.core import serializers
 
 
 
@@ -62,11 +64,17 @@ def simulacionCrear(request):
 
 def simular(request):
 	simula = Simulacion.objects.filter(usuario_id=1).latest('id')
+
 	contexto = {'simula':simula}
 	return render(request,'Simulacion/simular.html',contexto)
 
+def simularVer(request,idSimulacion):
+	simula = Simulacion.objects.get(id=idSimulacion)
+	contexto={'simula':simula}
+	return render(request,'Simulacion/simular.html',contexto)
 
-def grafico(request,idSimulacion):
+
+"""def grafico(request,idSimulacion):
 	e = 2.718281828
 	simula = Simulacion.objects.get(id=idSimulacion)
 	altura = simula.configuracion.altitud
@@ -106,23 +114,58 @@ def grafico(request,idSimulacion):
 	numero = len(N)
 	
 	nodos2 = simplejson.dumps(N)
+	jsonParametros(nodos2)
 
+	return render_to_response('Simulacion/grafico.html',{'nodos':nodos2,'simula':simula,'tiempo':tiempo2,'hidrico':hFase,'humedad':humedad,'numero':numero,'validar':validar2})"""
 
-	return render_to_response('Simulacion/grafico.html',{'nodos':nodos2,'simula':simula,'tiempo':tiempo2,'hidrico':hFase,'humedad':humedad,'numero':numero,'validar':validar2})
-
-"""class ajaxConsultarGrafico(TemplateView):
-	simula = Simulacion.objects.get(id=idSimulacion)
-	def get(self,request,*args,**kwargs):
-		validar2 = validar(simula)
-		data = {'vali':validar2}
-		return render_to_response(json.dumps(data))"""
-
-"""def consultaGrafico(request):
-	simula = Simulacion.objects.get(id=reques.GET['idForm'])
-	validar2 = validar(simula)
-	data = {'vali':validar2}
+"""def jsonParametros(nodo,hidrico,humedad,validar):
+	data = {"nodos":nodo,"hidrico":hidrico,"humedad":humedad,"validar":validar}
 	return JsonResponse(data)"""
 
+def jsonParametros(request):
+	e = 2.718281828
+	idSimulacion = request.GET.get('grafico')
+	simula = Simulacion.objects.get(id=idSimulacion)
+	altitud = float(simula.configuracion.altitud)
+	valida = validar(simula)
+	humedad = float(simula.configuracion.humedad)
+	tMaxima = float(simula.configuracion.temperaturaMax)
+	tMinima = float(simula.configuracion.temperaturaMin)
+	hidrico = hidricoFase(simula)
+
+	if tMinima < 8:
+		rT = 0
+	elif tMaxima <= 12:
+		rT = 0.55
+	elif tMaxima <= 29:
+		rT = 0.75
+	elif tMaxima <= 35:
+		rT = 1
+	elif tMaxima <= 45:
+		rT=1
+	elif tMaxima <= 50:
+		rT=0
+	tiempo = tiempoDia(simula)
+	tiempo2=[]
+	for a in tiempo:
+		tiempo2.append(float(a))
+
+	rm = Decimal((altitud))*Decimal((0.021))
+	N=[]
+	for t in tiempo2:
+		if t == 0:
+			N.append(0)
+		else:
+			getcontext().prec = 4
+			N.append(float(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)))
+	
+	#nodos = [1,2,3,4,5,6,7]
+	nodos = N
+	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico}
+	return HttpResponse(json.dumps(contexto),content_type='application/json') 
+
+def simula_serializer(simula):
+	return {'altitud':simula.configuracion.altitud}
 
 
 def tiempoDia(simulacion2):
@@ -160,31 +203,31 @@ def tiempoDia(simulacion2):
 def hidricoFase(simulacion):
 	t =[]
 	if simulacion.faseCultivo.germinacion:
-		t.append(19.35)
+		t.append(float(19.35))
 	else:
 		t.append(0)
 	if simulacion.faseCultivo.mergencia:
-		t.append(19.35)
+		t.append(float(19.35))
 	else:
 		t.append(0)
 	if simulacion.faseCultivo.hojaPrimaria:
-		t.append(19.35)
+		t.append(float(19.35))
 	else:
 		t.append(0)
 	if simulacion.faseCultivo.primeraHoja:
-		t.append(37.57)
+		t.append(float(37.57))
 	else:
 		t.append(0)
 	if simulacion.faseCultivo.terceraHoja:
-		t.append(37.57)
+		t.append(float(37.57))
 	else:
 		t.append(0)
 	if simulacion.faseCultivo.prefloracion:
-		t.append(48.1)
+		t.append(float(48.1))
 	else:
 		t.append(0)
 	if simulacion.faseCultivo.floracion:
-		t.append(43.65)
+		t.append(float(43.65))
 	else:
 		t.append(0)
 	return t

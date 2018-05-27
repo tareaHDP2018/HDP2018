@@ -21,7 +21,7 @@
 				<td>{{ simulacion.siembra.nombre }}</td>
 				<td>
 					<a class="btn btn-primary" href="{% url 'consulta:editar' simulacion.id %}">Editar</a>
-					<a  class="btn btn-info" href="{% url 'nuevo:graficos' simulacion.id %}">Ver</a>
+					<a  class="btn btn-info" href="{% url 'nuevo:simularVer' simulacion.id %}">Ver</a>
 					<a class="btn btn-danger" href="">Eliminar</a>
 				</td>
 			</tr>
@@ -33,11 +33,14 @@
 
 		{% endif %}
 	</tbody>
-                
-  <ul class="pager">
-    <li><a class="btn btn-primary" href="#">Previous</a></li>
-    <li><a class="btn btn-primary" href="#">Next</a></li>
-  </ul>
 
 {% endblock %}
 
+{% block footer %}
+<form>                
+  <ul class="pager">
+    <li><a class="submit" href="#">Previous</a></li>
+    <li><a class="submit" href="#">Next</a></li>
+  </ul>
+</form>
+{% endblock %}

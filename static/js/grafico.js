@@ -7,8 +7,8 @@ $(document).ready(function(){
 				data: $(this).serialize(),
 
 				success:function(json){
-                    var arrayColor = ['rgba(255, 99, 132, 0.5)','rgba(54, 162, 235, 0.5)','rgba(255, 206, 86, 0.5)','rgba(75, 192, 192, 0.5)','rgba(153, 102, 255, 0.5)','rgba(255, 159, 64, 0.5)',];
-                    var arrayBorderColor = ['rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)',];
+                    var arrayColor = ['rgba(255, 99, 132, 0.5)','rgba(54, 162, 235, 0.5)','rgba(255, 206, 86, 0.5)','rgba(75, 192, 192, 0.5)','rgba(153, 102, 255, 0.5)','rgba(255, 159, 64, 0.5)','rgba(255, 100, 70, 0.5)','rgba(200, 120, 30, 0.5)','rgba(220, 70, 90, 0.5)'];
+                    var arrayBorderColor = ['rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)','rgba(255, 100, 70, 0.5)','rgba(200, 120, 30, 0.5)','rgba(220, 70, 90, 0.5)'];
 					console.log(json['nodos']);
                     console.log(json.valida);
 	                console.log(json.hidrico);
@@ -259,27 +259,55 @@ $(document).ready(function(){
                   }
 
                   if(true){
+                    var ctx2 = document.getElementById('chart8').getContext('2d');
+                    var chart2 = new Chart(ctx2,{
+                        type: 'bar',
+                        data: {
+                            labels: json.fase,
+                            datasets: [{
+                                label: 'Crecimiento General',
+                                data: json.nodos ,
+                                backgroundColor: arrayColor,
+                                borderColor: arrayBorderColor,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                      beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                  }
+
+                  if(true){
+                  var humedad = json.humedad;
+                  var humedad2 = humedad/10;
+                  var humedad3 = [];
+                    for(var i =0;i<6;i++){
+                        humedad3[i]=humedad2;
+                    }
                     var ctx = document.getElementById('myChart').getContext('2d');
                     var chart = new Chart(ctx, {
                        type: 'line',
                           data: {
-                              labels: [['June', '2015'], 'July', 'August', 'September', 'October', 'November', 'December', ['January', '2016'], 'February', 'March', 'April', 'May'],
+                              labels: ['0 a 10','11 a 20','21 a 30','31 a 40'],
                               datasets: [{
                                    label: 'Hidricos simulados',
                                    fill: false,
                                    backgroundColor: 'rgb(255, 99, 132)',
                                    borderColor: 'rgb(255, 99, 132)',
-                                   data: [
-                                    json.hidrico
-                                  ]
+                                   data: humedad3,
                               }, {
                                    label: 'Hidricos optimo',
                                    fill: false,
                                    backgroundColor: 'rgb(40, 105, 220)',
                                    borderColor: 'rgb(40, 105, 220)',
-                                   data: [
-                                   1,2,3,4,5,6
-                                  ], 
+                                   data: json.hidrico, 
                              }]
                           },
                         options: {
@@ -290,9 +318,7 @@ $(document).ready(function(){
                             },
                         }
                     });
-                  }
-
-                      
+                  }                      
 				}
 			})
 		})

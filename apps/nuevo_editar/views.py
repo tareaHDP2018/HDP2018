@@ -132,6 +132,7 @@ def jsonParametros(request):
 	tMaxima = float(simula.configuracion.temperaturaMax)
 	tMinima = float(simula.configuracion.temperaturaMin)
 	hidrico = hidricoFase(simula)
+	faseC = fase(simula) 
 
 	if tMinima < 8:
 		rT = 0
@@ -161,7 +162,7 @@ def jsonParametros(request):
 	
 	#nodos = [1,2,3,4,5,6,7]
 	nodos = N
-	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico}
+	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico,'fase':faseC}
 	return HttpResponse(json.dumps(contexto),content_type='application/json') 
 
 def simula_serializer(simula):
@@ -263,6 +264,24 @@ def validar(simulacion2):
 	else:
 		t.append(0)
 	return t 
+
+def fase(simulacion2):
+	t =[]
+	if simulacion2.faseCultivo.germinacion:
+		t.append('Germinacion')
+	if simulacion2.faseCultivo.mergencia:
+		t.append('Emergencia')
+	if simulacion2.faseCultivo.hojaPrimaria:
+		t.append('Hoja primaria')
+	if simulacion2.faseCultivo.primeraHoja:
+		t.append('Primera hoja')
+	if simulacion2.faseCultivo.terceraHoja:
+		t.append('Tercera hoja')
+	if simulacion2.faseCultivo.prefloracion:
+		t.append('Prefloracion')
+	if simulacion2.faseCultivo.floracion:
+		t.append('Floracion')
+	return t
 
 
 

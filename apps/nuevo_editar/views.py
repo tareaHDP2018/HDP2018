@@ -14,15 +14,19 @@ from django.core import serializers
 
 # Create your views here.
 def index(request):
-	#if not request.user.is_active:
-			#return redirect('/')
+	if not request.user.is_active:
+			return redirect('/')
 	return render(request,'Simulacion/index.html')
 
 def somos(request):
+	if not request.user.is_active:
+			return redirect('/')
 
 	return render_to_response('Simulacion/quienSomos.html')
 
 def simulacionCrear(request):
+	if not request.user.is_active:
+			return redirect('/')
 	us=request.user
 	siembras = Siembra.objects.get(id=1)
 	usuario_id = Usuario.objects.get(nombre_usuario=us)
@@ -64,12 +68,16 @@ def simulacionCrear(request):
 
 
 def simular(request):
+	if not request.user.is_active:
+			return redirect('/')
 	simula = Simulacion.objects.filter(usuario_id=1).latest('id')
 
 	contexto = {'simula':simula}
 	return render(request,'Simulacion/simular.html',contexto)
 
 def simularVer(request,idSimulacion):
+	if not request.user.is_active:
+			return redirect('/')
 	simula = Simulacion.objects.get(id=idSimulacion)
 	contexto={'simula':simula}
 	return render(request,'Simulacion/simular.html',contexto)

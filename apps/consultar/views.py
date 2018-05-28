@@ -7,14 +7,19 @@ from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,Fa
  
 # Create your views here.
 def simulacionlist(request):
-	 us=request.user
-	 usua=Usuario.objects.get(nombre_usuario=us)
-	 simulacion = Simulacion.objects.filter(estado=1).filter(usuario=usua.id).order_by('-id')
-	 contexto = {'simulaciones':simulacion }
-	 return render(request, 'Simulacion/consultar.html', contexto)
+	if not request.user.is_active:
+			return redirect('/')
+	us=request.user
+	usua=Usuario.objects.get(nombre_usuario=us)
+	simulacion = Simulacion.objects.filter(estado=1).filter(usuario=usua).order_by('-id')
+	contexto = {'simulaciones':simulacion }
+	return render(request, 'Simulacion/consultar.html', contexto)
 
 @csrf_protect
 def simulacionEditar(request,idSimulacion):
+	if not request.user.is_active:
+			return redirect('/')
+
 	us=request.user
 	usua=Usuario.objects.get(nombre_usuario=us)
 	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
@@ -62,6 +67,9 @@ def simulacionEditar(request,idSimulacion):
 		return render(request,'Simulacion/editarSimulacion.html',contexto)
 
 def simulacionEliminar(request,idSimulacion):
+	if not request.user.is_active:
+			return redirect('/')
+
 	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
 	configura = get_object_or_404(Configuracion,pk=idSimulacion)
 	simula2 = Simulacion.objects.get(id=idSimulacion)

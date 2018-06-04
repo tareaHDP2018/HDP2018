@@ -23,7 +23,7 @@ def somos(request):
 			return redirect('/')
 
 	return render_to_response('Simulacion/quienSomos.html')
-
+ 
 def simulacionCrear(request):
 	if not request.user.is_active:
 			return redirect('/')

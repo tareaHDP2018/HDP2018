@@ -22,8 +22,8 @@ class Siembra(models.Model):
 class Configuracion(models.Model):
 	temperaturaMax = models.DecimalField(max_digits=5,decimal_places=2)
 	temperaturaMin = models.DecimalField(max_digits=5,decimal_places=2)
-	humedad = models.DecimalField(max_digits=5,decimal_places=2)
-	altitud = models.DecimalField(max_digits=5,decimal_places=2)
+	humedad = models.DecimalField(max_digits=6,decimal_places=2)
+	altitud = models.DecimalField(max_digits=6,decimal_places=2)
 	luminosidad = models.DecimalField(max_digits=5,decimal_places=2)
 	distanciaLinea = models.DecimalField(max_digits=5,decimal_places=2)
 

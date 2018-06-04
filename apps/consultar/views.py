@@ -21,13 +21,15 @@ def simulacionEditar(request,idSimulacion):
 			return redirect('/')
 
 	us=request.user
-	usua=Usuario.objects.get(nombre_usuario=us)
+	usuario_id=Usuario.objects.get(nombre_usuario=us)
 	simulacion = get_object_or_404(Simulacion,pk=idSimulacion)
 	configura = get_object_or_404(Configuracion,pk=idSimulacion)
 	
 	siembras = Siembra.objects.get(id=1)
-	usuario_id =usua.id
+	#usuario_id =usua.id
 	if request.method == 'POST':
+		simulaElimina = Simulacion.objects.get(id=idSimulacion)
+		simulaElimina.delete()
 		simula = Simulacion()
 		confi = Configuracion()
 		fase = FaseCultivo()

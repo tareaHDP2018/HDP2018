@@ -38,9 +38,20 @@
 
 {% block footer %}
 <form>                
-  <ul class="pager">
-    <li><a class="submit" href="#">Previous</a></li>
-    <li><a class="submit" href="#">Next</a></li>
-  </ul>
+  <div class="pagination">
+    <div class="section-inner clearfix">
+        <p>
+            {% if simulaciones.has_previous %}
+                <a href="?page={{ simulaciones.previous_page_number }}">&lt; Prev</a> |
+            {% endif %}
+
+            {% if simulaciones.has_next %}
+                <a href="?page={{ simulaciones.next_page_number }}">Next &gt;</a>
+            {% endif %}
+
+            <span>Page {{ simulaciones.number }} of {{ simulaciones.paginator.num_pages }}</span>
+        </p>
+    </div>
+</div>
 </form>
 {% endblock %}

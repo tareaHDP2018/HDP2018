@@ -1,6 +1,7 @@
 
 from django.shortcuts import render,redirect,get_object_or_404,render_to_response
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.core.paginator import Paginator,PageNotAnInteger, EmptyPage
 
 from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,FaseCultivo,Usuario
 #from apps.configurarSimulacion.forms import ConfigurarForm
@@ -12,6 +13,14 @@ def simulacionlist(request):
 	us=request.user
 	usua=Usuario.objects.get(nombre_usuario=us)
 	simulacion = Simulacion.objects.filter(estado=1).filter(usuario=usua).order_by('-id')
+	paginador = Paginator(simulacion,5)
+	page = request.GET.get('page')
+	try:
+		simulacion = paginador.page(page)
+	except PageNotAnInteger:
+		simulacion = paginador.page(1)
+	except EmptyPage:
+		simulacion = paginador.page(paginador.num_pages)
 	contexto = {'simulaciones':simulacion }
 	return render(request, 'Simulacion/consultar.html', contexto)
 

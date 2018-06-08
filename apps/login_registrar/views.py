@@ -51,7 +51,7 @@ def registrar(request):
             user=authenticate(username=usuario.nombre_usuario,password=usuario.password)
             login(request)
             return HttpResponseRedirect('/')     
-        else:
+        if User.objects.filter(username=nom).exists()==True and form.is_valid()and nom!=' ':
          form=RegistrarForm()
          error="error el nombre de usuario ya esta en uso"
 
@@ -67,9 +67,9 @@ def registrar(request):
     
 def handler404(request):
     
-    return render(request,'sesion/404.html',status=404)
+    return render(request,'404.html',status=404)
 
 
 def handler500(request):
     
-    return render(request,'sesion/500.html',status=500)
+    return render(request,'500.html',status=500)

@@ -24,7 +24,7 @@ class RegistrarForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control form-control-sm'}),max_length=8)
 	nombre=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
 	apellido=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
-	fechaNacimiento=forms.DateField(label='Fecha de nacimiento',widget = forms.SelectDateWidget(years=year,attrs={'class':'form-control'}))
+	fechaNacimiento=forms.DateField(label='Fecha de nacimiento',widget = forms.SelectDateWidget(years=year,attrs={'class':'form-control','id':'fecha'}))
 	sexo=forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control'}),choices=genero)
 	class Meta:
 		model=Usuario
@@ -33,6 +33,6 @@ class RegistrarForm(forms.ModelForm):
 class LoginForm(forms.ModelForm):
 	nombre_usuario=forms.CharField(label='nombre de usuario',widget=forms.TextInput(attrs={'placeholder':'su nombre de usuario aqui','class':'form-control'}))
 	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}),max_length=8)
-	class Meta:
+	class Meta:                                                     
 		model=Usuario
 		fields= ('nombre_usuario','password')

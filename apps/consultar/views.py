@@ -2,6 +2,9 @@
 from django.shortcuts import render,redirect,get_object_or_404,render_to_response
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.core.paginator import Paginator,PageNotAnInteger, EmptyPage
+from django.http import HttpResponse
+import json
+from django.core import serializers
 
 from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,FaseCultivo,Usuario
 #from apps.configurarSimulacion.forms import ConfigurarForm
@@ -91,3 +94,18 @@ def simulacionEliminar(request,idSimulacion):
 		return redirect('consulta:consultar')
 	else:
 		return render(request,'Simulacion/simulaciondelete.html',context={'nombre':nombre})
+
+
+def buscar(request):
+	if not request.user.is_active:
+			return redirect('/')
+
+	nombre = request.GET.get('title') #DICCIONARIO
+	simulas = Simulacion.objects.filter(nombre__startswith=nombre)
+	simulas = [simula_serializer(simula) for simula in simulas] #obteniendo lista de diccionarios
+	return HttpResponse(json.dumps(simulas),content_type='application/json')
+
+
+def simula_serializer(simula):
+	return {'nombre':simula.nombre,'linea':simula.lineaSiembra,'siembra':simula.siembra.nombre}
+

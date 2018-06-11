@@ -15,8 +15,7 @@ $(document).ready(function(){
                     if(json.valida[0]==1){
                     var germi = json.nodos[0];
                     var germi2 = germi/5;
-                    var germiR = Math.round10(germi2,-2)
-                    var germi3 = germiR;
+                    var germi3 = germi2;
                     var crecimiento = []
                     for(var i=0;i<5;i++){
                         crecimiento[i]=germi2;

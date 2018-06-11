@@ -7,5 +7,6 @@ urlpatterns=[
  url(r'^simulaciones$',simulacionlist,name='consultar'),
  url(r'^editar/(?P<idSimulacion>\d+)/$',simulacionEditar,name='editar'),
   url(r'^eliminarSimulacion/(?P<idSimulacion>\d+)$',simulacionEliminar,name='eliminar'),
+  url(r'^buscar$',buscar,name='buscar'),
 
 ]

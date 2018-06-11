@@ -2,6 +2,13 @@
 {% block title%}Consultar{% endblock %}
 
 {% block content %}
+<script type="text/javascript" src="/static/js/consulta.js"></script>
+<form method="GET" action="{% url 'consulta:buscar' %}" id="buscarSimulacion">
+	<div>
+		<input type="text" name="title">
+		<input type="submit" name="" value="buscar">
+	</div>
+</form>
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -54,4 +61,5 @@
     </div>
 </div>
 </form>
+
 {% endblock %}

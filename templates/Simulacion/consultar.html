@@ -2,11 +2,11 @@
 {% block title%}Consultar{% endblock %}
 
 {% block content %}
-<script type="text/javascript" src="/static/js/consulta.js"></script>
+
 <form method="GET" action="{% url 'consulta:buscar' %}" id="buscarSimulacion">
 	<div>
-		<input type="text" name="title">
-		<input type="submit" name="" value="buscar">
+		<input type="text" name="title" >
+		<input type="submit" name="" value="buscar" class="btn btn-primary">
 	</div>
 </form>
 <table class="table table-bordered">
@@ -20,6 +20,22 @@
 	</thead>
 
 	<tbody>
+	{% if buscaSimula%}
+		{% for busca in buscaSimula%}
+		
+		<tr>
+				<td>{{ busca.nombre }}</td>
+				<td>{{ busca.linea }}</td>
+				<td>{{ busca.siembra }}</td>
+				<td>
+					<a class="btn btn-primary" href="{% url 'consulta:editar' busca.id %}">Editar</a>
+					<a class="btn btn-danger" href="{%url 'consulta:eliminar' busca.id %}">Eliminar</a>
+					<a  class="btn btn-info" href="{% url 'nuevo:simularVer' busca.id %}">Ver</a>
+				</td>
+		</tr>
+		{% endfor %}
+
+	{% else %}
 		{% if simulaciones %}
 			{% for simulacion  in simulaciones %}
 			<tr>
@@ -39,6 +55,7 @@
 		<h1>No hay registros de simulaciones</h1>
 
 		{% endif %}
+	{% endif %}
 	</tbody>
 
 {% endblock %}

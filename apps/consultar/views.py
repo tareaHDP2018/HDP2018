@@ -103,9 +103,11 @@ def buscar(request):
 	nombre = request.GET.get('title') #DICCIONARIO
 	simulas = Simulacion.objects.filter(nombre__startswith=nombre)
 	simulas = [simula_serializer(simula) for simula in simulas] #obteniendo lista de diccionarios
-	return HttpResponse(json.dumps(simulas),content_type='application/json')
+	return render(request,'Simulacion/consultar.html',{'buscaSimula':simulas})
+	#return HttpResponse(json.dumps(simulas),content_type='application/json')
 
 
 def simula_serializer(simula):
-	return {'nombre':simula.nombre,'linea':simula.lineaSiembra,'siembra':simula.siembra.nombre}
+	return {'id':simula.id,'nombre':simula.nombre,'linea':simula.lineaSiembra,'siembra':simula.siembra.nombre}
 
+#PARA BOTON BUSCAR, HACER COMO EL DE LISTAR

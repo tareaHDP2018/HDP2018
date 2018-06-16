@@ -84,7 +84,7 @@ def simularVer(request,idSimulacion):
 	return render(request,'Simulacion/simular.html',contexto)
 
 def jsonParametros(request):
-	e = 2.718281828
+	e = 2.71
 	idSimulacion = request.GET.get('grafico')
 	simula = Simulacion.objects.get(id=idSimulacion)
 	altitud = float(simula.configuracion.altitud)
@@ -118,14 +118,23 @@ def jsonParametros(request):
 		if t == 0:
 			NodoTotal.append(0)
 		else:
-			#
-			N=math.pow(e,(rm*t)*float(rT))
+			potencia = (rm*t*rT)/1000
+			N=math.pow(e,potencia)
 			Econver = humedad*(0.70)
-			getcontext().prec = 4
 			crecimiento = Econver*((lumi*tMinima)-(0.0693*(tMaxima-25)))*(N*(0.85))
-			NodoTotal.append(round(crecimiento,4))
+			crecimiento2 = crecimiento/1000
+			crecimiento3 = round(crecimiento2,2)
+			NodoTotal.append(crecimiento3)
 	nodos = NodoTotal
-	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico,'fase':faseC}
+	divHumedad = humedad/10
+	if divHumedad < hidrico[3]:
+		mns = "Hidricos por debajo del nivel"
+	elif divHumedad > hidrico[2]*2:
+		mns = " Mucha humedad al cultivo"
+	else:
+		mns = "Hidricos aceptables para el cultivo"
+
+	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico,'fase':faseC,'mensaje':mns}
 	return HttpResponse(json.dumps(contexto),content_type='application/json') 
 
 def simula_serializer(simula):

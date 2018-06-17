@@ -10,12 +10,14 @@ from apps.configurarSimulacion.models import Simulacion,Configuracion,Siembra,Fa
 #from apps.configurarSimulacion.forms import ConfigurarForm
  
 # Create your views here.
+#LISTAMOS LOS DATOS DE LA BASE DE DATOS, FILTRANDO POR USUARIO LOGUEADO
 def simulacionlist(request):
 	if not request.user.is_active:
 			return redirect('/')
 	us=request.user
 	usua=Usuario.objects.get(nombre_usuario=us)
 	simulacion = Simulacion.objects.filter(estado=1).filter(usuario=usua).order_by('-id')
+	#PAGINADOR 
 	paginador = Paginator(simulacion,5)
 	page = request.GET.get('page')
 	try:
@@ -27,6 +29,7 @@ def simulacionlist(request):
 	contexto = {'simulaciones':simulacion }
 	return render(request, 'Simulacion/consultar.html', contexto)
 
+#FUNCION QUE NOS PERMITE EDITAR
 @csrf_protect
 def simulacionEditar(request,idSimulacion):
 	if not request.user.is_active:
@@ -79,7 +82,7 @@ def simulacionEditar(request,idSimulacion):
 		contexto = {'simula':simulacion,'confi':configura,'siembras':siembras}
 		#contexto.update(csrf(request))
 		return render(request,'Simulacion/editarSimulacion.html',contexto)
-
+#FUNCION QUE NOS PERMITE ELIMINAR UN REGISTRO
 def simulacionEliminar(request,idSimulacion):
 	if not request.user.is_active:
 			return redirect('/')
@@ -96,6 +99,7 @@ def simulacionEliminar(request,idSimulacion):
 		return render(request,'Simulacion/simulaciondelete.html',context={'nombre':nombre})
 
 
+#FUNCION QUE NOS PERMITE HACER BUSQUEDA DE UNA SIMULAACION
 def buscar(request):
 	if not request.user.is_active:
 			return redirect('/')
@@ -104,10 +108,9 @@ def buscar(request):
 	simulas = Simulacion.objects.filter(nombre__startswith=nombre)
 	simulas = [simula_serializer(simula) for simula in simulas] #obteniendo lista de diccionarios
 	return render(request,'Simulacion/consultar.html',{'buscaSimula':simulas})
-	#return HttpResponse(json.dumps(simulas),content_type='application/json')
 
 
+#SERIALIZANDO
 def simula_serializer(simula):
 	return {'id':simula.id,'nombre':simula.nombre,'linea':simula.lineaSiembra,'siembra':simula.siembra.nombre}
 
-#PARA BOTON BUSCAR, HACER COMO EL DE LISTAR

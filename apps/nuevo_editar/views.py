@@ -14,17 +14,20 @@ import math
 
 
 # Create your views here.
+#FUNCION QUE ENVIA AL INICIO DE LA APLICACION 
 def index(request):
 	if not request.user.is_active:
 			return redirect('/')
 	return render(request,'Simulacion/index.html')
 
+#ENVIAR AL INICIO DE SESION, CUANDO EL USUARIO NO SE A LOGUEADO
 def somos(request):
 	if not request.user.is_active:
 			return redirect('/')
 
 	return render_to_response('Simulacion/quienSomos.html')
  
+#FUNCION PARA CREAR UNA NUEVA SIMULACION, SE OCUPAN LAS CLASES CORRESPONDIENTES
 def simulacionCrear(request):
 	if not request.user.is_active:
 			return redirect('/')
@@ -36,6 +39,7 @@ def simulacionCrear(request):
 		simula = Simulacion()
 		confi = Configuracion()
 		fase = FaseCultivo()
+		#VALIDO LA ENTRADA, PARA CONOCER SI ES TRUE O FALSE
 		fase.germinacion=True if request.POST.get('germinacion') else False
 		fase.mergencia=True if request.POST.get('emergencia') else False
 		fase.hojaPrimaria=True if request.POST.get('hojaPrimaria') else False
@@ -68,21 +72,28 @@ def simulacionCrear(request):
 	return render(request,'Simulacion/nuevo.html',contexto)
 
 
+#FUNCION QUE PERMITE MOSTRAR LA SIMULACION A GRAFICAR, INTRODUCIDA POR EL USUARIO
 def simular(request):
 	if not request.user.is_active:
 			return redirect('/')
-	simula = Simulacion.objects.filter(usuario_id=1).latest('id')
+	us=request.user
+	usua=Usuario.objects.get(nombre_usuario=us)
+	simula = Simulacion.objects.filter(usuario=usua).latest('id')
 
 	contexto = {'simula':simula}
 	return render(request,'Simulacion/simular.html',contexto)
 
+#FUNCION PARA PODER VER LAS SIMULACIONES HECHAS ANTERIORMENTE EN EL LISTADO
 def simularVer(request,idSimulacion):
 	if not request.user.is_active:
 			return redirect('/')
-	simula = Simulacion.objects.get(id=idSimulacion)
+	us=request.user
+	usua=Usuario.objects.get(nombre_usuario=us)
+	simula = Simulacion.objects.filter(usuario=usua).get(id=idSimulacion)
 	contexto={'simula':simula}
 	return render(request,'Simulacion/simular.html',contexto)
 
+#FUNCION QUE NOS RETORNA MEDIANTE JSON LOS DATOS CALCULADOS PARA SER USADOS EN LOS GRAFICOS 
 def jsonParametros(request):
 	e = 2.71
 	idSimulacion = request.GET.get('grafico')
@@ -134,13 +145,14 @@ def jsonParametros(request):
 	else:
 		mns = "Hidricos aceptables para el cultivo"
 
+	#CONTEXTO ENVIADO CON TODOS LOS DATOS
 	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico,'fase':faseC,'mensaje':mns}
 	return HttpResponse(json.dumps(contexto),content_type='application/json') 
 
 def simula_serializer(simula):
 	return {'altitud':simula.configuracion.altitud}
 
-
+#
 def tiempoDia(simulacion2):
 	t =[]
 	if simulacion2.faseCultivo.germinacion:
@@ -173,6 +185,7 @@ def tiempoDia(simulacion2):
 		t.append("0")
 	return t 
 
+#SELECCIONANDO HIDRICOS SEGUN FASE DE CULTIVO SELECCIONADA
 def hidricoFase(simulacion):
 	t =[]
 	if simulacion.faseCultivo.germinacion:
@@ -205,6 +218,7 @@ def hidricoFase(simulacion):
 		t.append(0)
 	return t
 
+#VALIDAR SEGUN FASE DE CULTIVO SELECCIONADA
 def validar(simulacion2):
 	t =[]
 	if simulacion2.faseCultivo.germinacion:

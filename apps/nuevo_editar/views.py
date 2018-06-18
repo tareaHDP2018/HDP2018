@@ -56,7 +56,7 @@ def simulacionCrear(request):
 		confi.altitud = request.POST['altitud']
 		confi.luminosidad = request.POST['luminosidad']
 		confi.distanciaLinea = request.POST['distanciaL']
-		confi.save()
+		confi.save() #guardar cambios de configuracion
 		confi_id = Configuracion.objects.latest('id')
 
 		simula.nombre = request.POST['simulacion']
@@ -66,7 +66,7 @@ def simulacionCrear(request):
 		simula.usuario = usuario_id
 		simula.configuracion=confi_id
 		simula.faseCultivo = fase_id
-		simula.save()
+		simula.save() #guardar cambios de simulacion 
 		return redirect('nuevo:simula')
 	contexto = {'siembras':siembras}
 	return render(request,'Simulacion/nuevo.html',contexto)
@@ -83,7 +83,7 @@ def simular(request):
 	contexto = {'simula':simula}
 	return render(request,'Simulacion/simular.html',contexto)
 
-#FUNCION PARA PODER VER LAS SIMULACIONES HECHAS ANTERIORMENTE EN EL LISTADO
+#FUNCION PARA PODER VER LAS SIMULACIONES HECHAS ANTERIORMENTE, SELECCIONADAS EN EL LISTADO, boton ver
 def simularVer(request,idSimulacion):
 	if not request.user.is_active:
 			return redirect('/')
@@ -147,7 +147,7 @@ def jsonParametros(request):
 
 	#CONTEXTO ENVIADO CON TODOS LOS DATOS
 	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico,'fase':faseC,'mensaje':mns}
-	return HttpResponse(json.dumps(contexto),content_type='application/json') 
+	return HttpResponse(json.dumps(contexto),content_type='application/json') #enviando mediante json, para asi poder ser utilizados en le JS
 
 def simula_serializer(simula):
 	return {'altitud':simula.configuracion.altitud}

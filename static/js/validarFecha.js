@@ -1,9 +1,11 @@
 function myFunction() {
+    /* obtiene los datos de la fecha de nacimiento*/
 	var x = document.getElementById("id_fechaNacimiento_day");
      var y = document.getElementById("id_fechaNacimiento_month");
      var z= document.getElementById("id_fechaNacimiento_year");
       var botton = document.getElementById("registrar");
       var anio=parseInt(z.value);
+      /* comprueba si el año es bisiesto*/
       var comprobar=((anio%4 == 0) && (anio%100 != 0)) || (anio%400 == 0);
       var i=0;
      
@@ -11,6 +13,7 @@ function myFunction() {
      botton.disabled = true;
      alert("el dia no existe para el mes correspondiente");
      botton.disabled = false;
+     /*desactiva el boton  si incumple una restricciones*/
          }
     else if ((x.value=="29" && y.value=="2")&&(comprobar==false)){
 	botton.disabled=true;
@@ -42,6 +45,7 @@ function myFunction() {
     
     else{
     	botton.disabled=false;
+        /*activa el boton de registrar*/
     }
 
 

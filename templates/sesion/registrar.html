@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles %} <!-->carga los archivos estaticos</!-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,11 +17,12 @@
 		<form method="post">
 {% csrf_token %}
  {{form.as_p}}
+ <!--> carga el formulario creado como contexto</!-->
  
  <button id="registrar" type="submit" class="btn btn-primary" onclick="myFunction()"> registrarse</button>
 </form>
 <div id="comprobando">
-	{{error}}
+	{{error}}<!-->contexto  del error enviado </!-->
 	<a href="{% url 'login_registrar:log' %}">volver para iniciar sesion</a>
 </div>
 	

@@ -5,7 +5,7 @@ from apps.configurarSimulacion.forms import *
 
 # Create your views here.
 def index(request):
-	if not request.user.is_active:
+	if not request.user.is_active:#si el usuario no ha ingresado al sistema lo redirige a inicio de sesion
 			return redirect('/')
 	return render(request,'Simulacion/index.html')
 

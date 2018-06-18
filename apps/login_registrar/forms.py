@@ -1,9 +1,9 @@
-from django.contrib.admin.widgets import AdminDateWidget
+from django.contrib.admin.widgets import AdminDateWidget 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from apps.configurarSimulacion.models import Usuario
+from apps.configurarSimulacion.models import Usuario #modelo a utilizar para los formularios
 
 
 year=('1930','1931','1932','1933','1934','1935','1936','1937','1938','1939',
@@ -15,9 +15,9 @@ year=('1930','1931','1932','1933','1934','1935','1936','1937','1938','1939',
 	'1980','1981','1982','1969','1983','1984','1985','1986','1987','1988','1989',
 	'1990','1991','1992','1993','1994','1995','1996','1997','1998','1999',
 	'2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010',
-	)
+	) #tupla que contiene los años de nacimiento de los usuarios #para la fecha de nacimiento
 genero=(('masculino','masculino')
-	,('femenino','femenino'))
+	,('femenino','femenino')) 
 
 class RegistrarForm(forms.ModelForm):
 	nombre_usuario=forms.CharField(label='nombre de usuario',widget=forms.TextInput(attrs={'placeholder':'su nombre de usuario aqui','class':'form-control form-control-sm'}))
@@ -26,7 +26,7 @@ class RegistrarForm(forms.ModelForm):
 	apellido=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
 	fechaNacimiento=forms.DateField(label='Fecha de nacimiento',widget = forms.SelectDateWidget(years=year,attrs={'class':'form-control','id':'fecha'}))
 	sexo=forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control'}),choices=genero)
-	class Meta:
+	class Meta: #los campos que se van a utilizar
 		model=Usuario
 		fields= '__all__'
 
@@ -36,3 +36,4 @@ class LoginForm(forms.ModelForm):
 	class Meta:                                                     
 		model=Usuario
 		fields= ('nombre_usuario','password')
+#los widgets nos permiten personalizar los inputs para los htmls

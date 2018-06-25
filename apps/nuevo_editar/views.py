@@ -132,7 +132,7 @@ def jsonParametros(request):
 			potencia = (rm*t*rT)/1000
 			N=math.pow(e,potencia)
 			Econver = humedad*(0.70)
-			crecimiento = Econver*((lumi*tMinima)-(0.0693*(tMaxima-25)))*(N*(0.85))
+			crecimiento = Econver*((lumi*tMinima)-(0.0693*(tMaxima-25)))*(N*(0.85)) #ecuacion de john para crecimiento
 			crecimiento2 = crecimiento/1000
 			crecimiento3 = round(crecimiento2,2)
 			NodoTotal.append(crecimiento3)
